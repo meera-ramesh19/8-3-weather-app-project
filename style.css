@@ -1,0 +1,124 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  text-align: center;
+  letter-spacing: 0.2rem;
+  line-height: 1.2;
+  font-size: 1rem;
+  margin: 0 auto;
+  max-width: 1000px;
+}
+
+.header {
+  margin: 2rem auto;
+  border: 1px solid black;
+  background-color: rgba(12, 124, 126, 0.643);
+  max-width: 80vw;
+  width: 100%;
+  padding: 1rem;
+}
+.input-wrapper {
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#user-input,
+#submit {
+  padding: 1rem;
+  border-radius: 10px;
+}
+#submit {
+  width: 8rem;
+}
+
+.main {
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+  grid-gap: 0rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.temperature-input {
+  display: block;
+  margin-bottom: 1rem;
+  text-align: center;
+  width: 200px;
+}
+
+.conversions {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+p,
+.temperature,
+#conversion-btn,
+.conversions {
+  margin-bottom: 1rem;
+}
+#submit-city {
+  padding: 0.5rem;
+  width: 5rem;
+  border-radius: 10px;
+}
+.celsius,
+.fahrenheit {
+  display: inline-block;
+  /* margin-left:1rem; */
+  text-align: center;
+}
+
+.temperature-converter,
+.location-data,
+.aside {
+  border: 1px solid black;
+  text-align: center;
+  padding-top: 1rem;
+}
+
+.temperature-converter {
+  order: 2;
+}
+.location-data {
+  order: 3;
+}
+.aside {
+  order: 1;
+}
+
+#conversion-btn {
+  padding: 0.5rem;
+  width: 5rem;
+  border-radius: 10px;
+}
+.temperature {
+  padding: 0.5rem;
+  border-radius: 10px;
+}
+.footer {
+  margin-bottom: 0;
+  right: 0;
+  left: 0;
+}
+
+@media (min-width: 1000px) {
+  .main {
+    grid-template-columns: 200px 1fr 200px;
+  }
+  .temperature-converter {
+    order: 1;
+  }
+  .location-data {
+    order: 2;
+  }
+  .aside {
+    order: 3;
+  }
+}

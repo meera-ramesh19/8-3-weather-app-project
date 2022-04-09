@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8" />
+   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+   <link rel="icon" href="./assets/favicon.ico" />
+   <meta property="og:title" content="Weather App">
+   <meta property="og:description" content="location based 3-day weather app">
+   <meta property="og:image" content="./assets/all-feature.png">
+   <meta property="og:url" content="http://weatherapp.netlify.com">
+   <meta name="twitter:card" content="summl-example.com/index.htmary_large_image">
+   <meta name="og:site_name" content="weatherapp">
+   <meta name="twitter:image:alt" content="Alt text for image">
+   <meta property="fb:app_id" content="your_app_id" />
+   <meta name="twitter:site" content="@website-username">
+    <title>City Weather App</title>
+    <link rel="stylesheet" href="style.css">
+    <script defer src="app.js"></script>
+</head>
+<body>
+    
+     <header class="header">
+      
+         <h1 class="title">Weather App</h1>
+      
+        <!-- <section class="input-container"> -->
+         <form id="user-inputs">
+           <section class="input-wrapper">
+              <p>Pick a Location </p>
+              <input type="text" placeholder="Enter a city... .." id="location"  class="location"/>
+            </section>
+             <input type="submit" id="submit-location" value="Get Weather" />
+         
+         </form>
+        <!-- </section> -->
+     </header>
+
+ 
+     <main class="main" >
+         <!-- <section class="main"> -->
+        <section class="temperature-converter"> 
+
+          <form id="temperature-input">
+              
+           <p>Convert the temperature</p>
+           <input type="number" placeholder="Enter a number"
+           class="temperature" id="temperature" />
+
+           <section class="conversions">
+            <section class="celsius">
+               <label for="celsius" class="radio"> To Celsius</label>
+               <input type="radio" id="celsius" name="celsius" />
+            </section>
+            <section class="fahrenheit">
+               <label for="fahrenheit" class="radio">To Fahrenheit</label>
+               <input type="radio" id="fahrenheit" name="fahrenheit" />
+            </section>
+          </section>
+            <input type="submit" id="conversion-btn" value="submit" />
+          </form>
+         </section>
+  
+        <article class="location-data">
+           <!-- <p class="weather"> -->
+              Choose a location to view the weather
+            <!-- </p> -->
+           <section id="today"></section>
+           <section id="tomorrow"></section>
+           <section id="dayafter"></section>
+        </article>
+
+        <aside class="aside">
+           <section >
+            <h3 class="history"> Previous Searches</h3>
+            <p class="history">No previous searches</p>
+             <ul class="search-history">
+           
+            </ul>
+         </section>
+         </aside>
+      <!-- </section> -->
+   </main>
+     <footer class="footer">
+        <p><small>&copy; Copyright Meera Ramesh</small></p>
+     </footer>
+</body>
+</html>
