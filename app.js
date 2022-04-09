@@ -1,4 +1,5 @@
 const BASE_URL = 'https://wttr.in/';
+
 /***
  *
  * @params (object) event
@@ -9,13 +10,15 @@ const getLocation = (event) => {
   event.preventDefault();
   let location = document.querySelector('#location');
   console.log(event.target);
-  location = location.value;
-  console.log(location);
-  location = location[0].toUpperCase() + location.slice(1);
+
+  let city = location.value;
+  console.log(city);
+  city = city[0].toUpperCase() + city.slice(1);
   //url fpr the fetch
-  const locationUrl = `https://wttr.in/${location}?format=j1`;
+  const locationUrl = `https://wttr.in/${city}?format=j1`;
+
   //fetch API data
-  fetchLocationWeather(locationUrl);
+  fetchLocationWeather(locationUrl, city);
 };
 
 /**
@@ -25,11 +28,14 @@ const getLocation = (event) => {
  * @return (object{}) responsedata
  *
  */
-const fetchLocationWeather = (url) => {
-  fetch(url)
-    .then((res) => res.json())
-    .then(renderWeatherData)
-    .catch(renderError);
+const fetchLocationWeather = async (url, city) => {
+  try {
+    const res = await fetch(url);
+    const data = await res.json();
+    renderWeatherData(data, city);
+  } catch {
+    renderError();
+  }
 };
 
 /**
@@ -38,9 +44,9 @@ const fetchLocationWeather = (url) => {
  *
  * @return
  */
-const renderWeatherData = (response) => {
+const renderWeatherData = (response, city) => {
   //temp_c,temp_f
-
+  // location = document.querySelector('#location');
   console.log(
     'in weather data',
     response,
@@ -72,11 +78,29 @@ const renderWeatherData = (response) => {
     response.weather[0].date,
     response.weather[0].totalSnow_cm
   );
-  const { current_condition, request, nearest_area } = response;
+  const { current_condition, weather, nearest_area } = response;
   const { areaName, region, country } = nearest_area[0];
+  const weatherInfo = document.querySelector('.weather');
 
-  console.log(areaName, region, country);
+  weatherInfo.innerHTML += `
+  <div class="response-data">                                                <img src=${current_condition[0].weatherIconUrl[0].value} alt = ${current_condition[0].weatherDesc[0].value} />
+  <h3> <strong>${city}</strong></h3>
+  <p><strong>Nearest Area : </strong>${areaName[0].value}</p>
+  <p> <strong>Region : </strong>${region[0].value} <p>
+  <p> <strong>Country : </strong>${country[0].value} <p>
+  <p><strong>Feels Like : </strong>  ${current_condition[0].FeelsLikeF}°F</p>
+  <p><strong>Chance of Sunshine : </strong>  ${weather[0].hourly[0].chanceofsunshine}</p>
+  <p><strong>Chance of Rain :  </strong> ${weather[0].hourly[0].chanceofrain}</p>
+  <p><strong>Chance of Sunshine : </strong> ${weather[0].hourly[0].chanceofsunshine}</p>
+  <p><strong>Chance of Snow :  </strong> ${weather[0].hourly[0].chanceofsnow}</p>
+       </div>`;
 };
+
+/****
+ *@params(string) error message
+ */
+
+const temperatureConverter = () => {};
 
 /****
  *@params(string) error message
@@ -91,4 +115,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
   const submitLocation = document.querySelector('#submit-location');
 
   submitLocation.addEventListener('click', getLocation);
+
+  temperatureConverter();
 });

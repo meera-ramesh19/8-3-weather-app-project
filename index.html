@@ -26,10 +26,10 @@
       
         <!-- <section class="input-container"> -->
          <form id="user-inputs">
-           <section class="input-wrapper">
+           <!-- <section class="input-wrapper"> -->
               <p>Pick a Location </p>
               <input type="text" placeholder="Enter a city... .." id="location"  class="location"/>
-            </section>
+            <!-- </section> -->
              <input type="submit" id="submit-location" value="Get Weather" />
          
          </form>
@@ -39,7 +39,7 @@
  
      <main class="main" >
          <!-- <section class="main"> -->
-        <section class="temperature-converter"> 
+        <section class="temperature-converter mob"> 
 
           <form id="temperature-input">
               
@@ -57,17 +57,15 @@
                <input type="radio" id="fahrenheit" name="fahrenheit" />
             </section>
           </section>
-            <input type="submit" id="conversion-btn" value="submit" />
+            <input type="submit" id="conversion-btn" value="Convert" />
           </form>
          </section>
   
-        <article class="location-data">
-           <!-- <p class="weather"> -->
-              Choose a location to view the weather
-            <!-- </p> -->
-           <section id="today"></section>
-           <section id="tomorrow"></section>
-           <section id="dayafter"></section>
+        <article class="location-data" >
+           <div class="weather" placeholder="Choose a location to view the weather">
+            
+           </div>
+         
         </article>
 
         <aside class="aside">
