@@ -37,38 +37,54 @@
      </header>
 
  
-     <main class="main" >
+     <section class="main" >
          <!-- <section class="main"> -->
-        <section class="temperature-converter mob"> 
+        <aside class="temperature-converter mob"> 
 
           <form id="temperature-input">
               
-           <p>Convert the temperature</p>
+           <label for="temperature">Convert the temperature</label>
            <input type="number" placeholder="Enter a number"
            class="temperature" id="temperature" />
 
-           <section class="conversions">
-            <section class="celsius">
+            <section class="conversions"> 
+             <section class="celsius">
                <label for="celsius" class="radio"> To Celsius</label>
-               <input type="radio" id="celsius" name="celsius" />
-            </section>
-            <section class="fahrenheit">
+               <input type="radio" id="celsius" name="convert" value="celsius" checked/>
+            </section> 
+             <section class="fahrenheit"> 
                <label for="fahrenheit" class="radio">To Fahrenheit</label>
-               <input type="radio" id="fahrenheit" name="fahrenheit" />
+               <input type="radio" id="fahrenheit" name="convert" value="fahrenheit" />
             </section>
           </section>
             <input type="submit" id="conversion-btn" value="Convert" />
-          </form>
-         </section>
-  
-        <article class="location-data" >
-           <div class="weather" placeholder="Choose a location to view the weather">
-            
+            </form>
+            <h4 class="result"></h4>
+         </aside>
+       
+        <main>
+          <article class="location-data" >
+            Choose a location to view the weather
+           <div class="weather" > 
+             
            </div>
-         
-        </article>
+            </article>
+           
+            <article class="three_day_forecast">
+               <div class="today">
+                  
+               </div>
+               <div class="tomorrow">
+                 
+               </div>
+               <div class="dayafter">
+                  
+               </div>
+            </article>
+          
+           </main>
 
-        <aside class="aside">
+        <aside class="previous-history">
            <section >
             <h3 class="history"> Previous Searches</h3>
             <p class="history">No previous searches</p>
@@ -78,7 +94,7 @@
          </section>
          </aside>
       <!-- </section> -->
-   </main>
+      </section>
      <footer class="footer">
         <p><small>&copy; Copyright Meera Ramesh</small></p>
      </footer>

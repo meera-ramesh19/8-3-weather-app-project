@@ -11,19 +11,36 @@ body {
   line-height: 1.2;
   font-size: 1rem;
   margin: 0 auto;
-  max-width: 1000px;
+  /* max-width: 1200px; */
+  width: 100%;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  background: #809a9a;
+  /* #809a9a; */
+  /*808d8d*/
   /* max-width: 80vw; */
   font-family: Helvetica, Arial, sans-serif;
 }
-
+.cityName {
+  padding: 1rem 0;
+}
+.weather {
+  font-size: 24px;
+  font-weight: 700;
+  display: block;
+}
 .header {
   margin: 0 auto;
   border: 1px solid black;
-  background-color: #0c7c7ea4;
-  max-width: 1024px;
+  background-color: rgb(12, 124, 126);
+  text-align: center;
+  /* #0f9496; */
+  /* #2A9D8F */
+  /* #309e9e; */
+  /* 12,124,126 */
+  /* #0c7c7e; */
+  /* max-width: 120px; */
   width: 100%;
   padding: 1rem;
 }
@@ -42,7 +59,12 @@ body {
 }
 #submit-location {
   width: 10rem;
-  background-color: #0c7c7ea4;
+  background-color: #0c7c7e;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  /* #2a9d8f; */
+  /* #2A9D8F  0c7c7e*/
 }
 
 #location {
@@ -53,6 +75,7 @@ body {
 .main {
   max-width: 1200px;
   width: 100%;
+  margin: 0 auto;
   display: grid;
   grid-template-rows: repeat(2, 1fr);
   grid-template-columns: 290px 150px;
@@ -75,6 +98,7 @@ body {
   display: flex;
   flex-direction: column;
   text-align: center;
+  display: inline-block;
 }
 
 p,
@@ -88,7 +112,7 @@ p,
   padding: 0.5rem;
   width: 5rem;
   border-radius: 10px;
-  background-color: #0c7c7ea4;
+  background-color: #0c7c7e;
 } */
 
 .celsius,
@@ -100,7 +124,7 @@ p,
 
 /* .temperature-converter, */
 .location-data,
-.aside {
+.previous-history {
   border: 1px solid black;
   text-align: center;
   padding-top: 1rem;
@@ -110,18 +134,57 @@ p,
 .temperature-converter {
   order: 2;
 } */
-/* .location-data {
-  order: 2;
+.location-data {
+  margin: 1rem 0;
+  display: grid;
+  grid-template-rows: repeat(2, 3fr);
+  display: inline-grid;
+  color: whitesmoke;
+  border-radius: 5%;
+  background-color: #4f4f4f;
+  /* rgb(6, 91, 93); */
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px,
+    rgba(0, 0, 0, 0.22) 0px 10px 10px;
 }
+.three_day_forecast {
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+  color: whitesmoke;
+  grid-gap: 1rem;
+  border-radius: 5%;
+  background-color: #4f4f4f;
+  /* rgb(6, 91, 93); */
+  margin-top: 5rem;
+  
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px,
+    rgba(0, 0, 0, 0.22) 0px 10px 10px;
+}
+
+.today,
+.tomorrow,
+.dayafter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin:2rem auto;
+  padding-top: 2rem;
+  width: 150px;
+  border: 1px solid black;
+}
+/*
 .aside {
   order: 1;
 }  */
 
 #conversion-btn {
-  font-size: 15px;
-  width: 5rem;
+  font-size: 20px;
+  width: 6rem;
+  color: whitesmoke;
   border-radius: 10px;
-  background-color: #0c7c7ea4;
+  background-color: #232323;
+  /* #4f4f4f; */
+  /* #808d8d; */
+  /* #0c7c7e; */
   padding: 0.5rem;
   letter-spacing: 0rem;
   line-height: 1.2;
@@ -138,15 +201,27 @@ p,
 
 .mob {
   /* display: none; */
+  color: black;
   grid-row: 1 / span 3;
   grid-column: 1 / span 3;
-  font-size: 14px;
+  font-size: 20px;
   padding: 0.5rem;
   letter-spacing: 0rem;
   line-height: 1.2;
+  /* background-color: #4f4f4f; */
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px,
+    rgba(0, 0, 0, 0.22) 0px 10px 10px;
+}
+
+.result {
+  padding: 0.7rem;
 }
 
 @media (min-width: 700px) {
+  body {
+    width: 1005;
+  }
   .mob {
     display: block;
     grid-row: 1;
@@ -155,7 +230,13 @@ p,
     padding: 1rem;
   }
   .main {
-    grid-template-columns: 200px 1fr 200px;
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .three_day_forecast {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .conversions {
+    display: block;
   }
   .temperature-converter {
     order: 1;
@@ -163,7 +244,13 @@ p,
   .location-data {
     order: 2;
   }
-  .aside {
+  .previous-history {
     order: 3;
+  }
+  .celsius,
+  .fahrenheit {
+    display: block;
+    /* margin-left:1rem; */
+    text-align: center;
   }
 }
