@@ -14,8 +14,7 @@ const getLocation = (event, location) => {
   let weatherInfo = document.querySelector('.weather');
   let article = document.querySelector('.three_day_forecast');
 
-
-  if (location.value === '' || location.value=== null) {
+  if (location.value === '' || location.value === null) {
     message = 'Error !! Location cannot be empty.Please enter a Location';
     renderError(message);
     return;
@@ -25,11 +24,10 @@ const getLocation = (event, location) => {
   // console.log(event.target, 'location=', location);
 
   let city = location.value;
-  
 
   location.value = '';
   console.log(city);
-  city = city[0].toUpperCase() + city.slice(1);
+  // city = city[0].toUpperCase() + city.slice(1);
 
   const locationUrl = `https://wttr.in/${city}?format=j1`;
 
@@ -44,7 +42,7 @@ const getLocation = (event, location) => {
  * @return (object{}) responsedata
  *
  */
-const fetchLocationWeather = async (url, city) => {
+const fetchLocationWeather = async (url, city, image) => {
   try {
     const res = await fetch(url);
     const data = await res.json();
@@ -103,36 +101,87 @@ const renderWeatherData = (response, city) => {
   const { areaName, region, country } = nearest_area[0];
 
   const val = city === areaName[0].value ? 'Area' : 'Nearest Area';
+  console.log(val);
 
-  console.log('in renderdata =', val, areaName[0].value, city);
+  console.log(response);
+
   let chanceOfRain = 0,
     chanceOfSnow = 0,
-    chanceOfSunshine = 0;
+    chanceOfSunshine = 0,
+    src = '',
+    alt = '';
 
-  weather.forEach((w, index) => {
-    chanceOfRain += w.hourly[index].chanceofrain;
-    chanceOfSunshine += w.hourly[index].chanceofsunshine;
-    chanceOfSnow += w.hourly[index].chanceofsnow;
-  });
+  let hours = weather[0].hourly;
+  console.log(hours);
 
-  chanceOfRain /= weather[0].hourly.length;
-  chanceOfSnow /= weather[0].hourly.length;
-  chanceOfSunshine /= weather[0].hourly.length;
+  chanceOfSunshine =
+    hours.reduce((acc, val) => {
+      return (acc += Number(val.chanceofsunshine));
+    }, 0) / 8;
+
+  let highestSunshineVal = hours.reduce((acc, ele) => {
+    return acc > Number(ele.chanceofsunshine)
+      ? acc
+      : (acc = Number(ele.chanceofsunshine));
+  }, 0);
+
+  // const filteredSunshine = hours.filter(
+  //   (ele) => Number(ele.chanceofsunshine) > 50
+  // )[0].chanceofsunshine;
+
+  // const sunshine =
+  //   filteredSunshine > chanceOfSunshine ? filteredSunshine : chanceOfSunshine;
+
+  // console.log('s=', sunshine, 'f=', filteredSunshine);
+
+  chanceOfSnow =
+    hours.reduce((acc, val) => {
+      return (acc += Number(val.chanceofsnow));
+    }, 0) / 8;
+
+  let highestSnowVal = hours.reduce((acc, ele) => {
+    return acc > Number(ele.chanceofsnow)
+      ? acc
+      : (acc = Number(ele.chanceofsnow));
+  }, 0);
+
+  // const filteredSnow = hours.filter((ele) => Number(ele.chanceofsnow) > 50)[0]
+  //   .chanceofsnow;
+
+  // const snow = filteredSnow > chanceOfSnow ? filteredSnow : chanceOfSnow;
+  // console.log('ss=', snow, 'fs=', filteredSnow);
+
+  chanceOfRain =
+    hours.reduce((acc, val) => {
+      return (acc += Number(val.chanceofrain));
+    }, 0) / 8;
+
+  let highestRainVal = hours.reduce((acc, ele) => {
+    return acc > Number(ele.chanceofrain)
+      ? acc
+      : (acc = Number(ele.chanceofrain));
+  }, 0);
+
+  // const filteredRain = hours.filter((ele) => Number(ele.chanceofrain) > 50)[0]
+  //   .chanceofrain;
+
+  // const rain = filteredRain > chanceOfRain ? filteredRain : chanceOfRain;
+  // console.log('sr=', rain, 'fr=', filteredRain);
 
   const weatherInfo = document.querySelector('.location-data');
-  const image = document.createElement('img');
+  // const image = document.createElement('img');
 
   weatherInfo.innerHTML = '';
 
-  if (chanceOfSunshine > 50) {
-    image.src = './assets/icons8-summer.gif';
-    image.alt = 'sun';
-  } else if (chanceOfRain > 50) {
-    image.src = './assets/icons8-torrential-rain.gif';
-    image.alt = 'rain';
-  } else if (chanceOfSnow > 50) {
-    image.src = './assets/icons8-light-snow.gif';
-    image.alt = 'snow';
+  if (highestSunshineVal > 50) {
+    src = './assets/icons8-summer.gif';
+    alt = 'sun';
+  } else if (highestRainVal > 50) {
+    src = './assets/icons8-torrential-rain.gif';
+    alt = 'rain';
+  } else if (highestSnowVal > 50) {
+    src = './assets/icons8-light-snow.gif';
+    alt = 'snow';
   }
   // image.style.textAlign = 'center';
 
@@ -141,16 +190,24 @@ const renderWeatherData = (response, city) => {
   // weatherInfo.append(image);
 
   // div.innerHTML += '<img src="'+img.src+'" />';
-  weatherInfo.innerHTML += `<div class="card"><img class="icon" src=${image.src} alt=${image.alt}/><div class="container"><p><strong>${city}</strong></h2><p><strong>${val}:</strong>${areaName[0].value}</p><p><strong>Region:</strong>${region[0].value}<p><p><strong>Country:</strong>${country[0].value}<p><p><strong>Feels Like:</strong>${current_condition[0].FeelsLikeF}°F</p><p><strong>Chance of Sunshine:</strong>${weather[0].hourly[0].chanceofsunshine}</p><p><strong>Chance of Rain:</strong>${weather[0].hourly[0].chanceofrain}</p><p><strong>Chance of Snow:</strong>${weather[0].hourly[0].chanceofsnow}</p></div></div>`;
+  weatherInfo.innerHTML += `<div class="card"><img class="icon" src=${src} alt=${alt} /><div class="container"><h2><strong>${city}</strong></h2><p><strong>${val}: </strong>${
+    areaName[0].value
+  }</p><p><strong>Region: </strong>${
+    region[0].value
+  }<p><p><strong>Country: </strong>${
+    country[0].value
+  }<p><p><strong>Feels Like: </strong>${
+    current_condition[0].FeelsLikeF
+  }<sup>&deg;</sup></p><p><strong>Chance of Sunshine: </strong>${chanceOfSunshine.toFixed(
+    0
+  )}</p><p><strong>Chance of Rain: </strong>${chanceOfRain.toFixed(
+    0
+  )}</p><p><strong>Chance of Snow: </strong>${chanceOfSnow.toFixed(
+    0
+  )}</p></div>`;
 
   const article = document.querySelector('.three_day_forecast');
   getThreeDayForecast(response, article);
-  // setTimeout(() => {
-  //  removes element from DOM
-
-  // hides element (still takes up space on page)
-  // box.style.visibility = 'hidden';
-  // }, 10000);
 };
 
 /****
@@ -159,7 +216,7 @@ const renderWeatherData = (response, city) => {
  * displays it in the DOM
  */
 const temperatureConverter = (event) => {
-  let temperatureInput = document.querySelector('#temperature');
+  let temperatureInput = document.querySelector('#temp-to-convert');
   const result = document.querySelector('.result');
 
   if (temperatureInput.value === '' || temperatureInput.value === null) {
@@ -224,7 +281,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
   const submitLocation = document.querySelector('#submit-location');
   const tempForm = document.querySelector('#temperature-input');
   let location = document.querySelector('#location');
-
+  const image = document.createElement('img');
   // submitLocation.addEventListener('click', getlocation);
   userInput.addEventListener('submit', (event) => {
     // console.log(event.target);

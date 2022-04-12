@@ -179,9 +179,11 @@ p,
   justify-content: center; */
   margin: 0 auto;
   padding-top: 2rem;
+  text-align: center;
   /* width: 50px; */
   /* border: 2px solid  #0c7c7e; */
 }
+
 /*
 .aside {
   order: 1;
@@ -189,7 +191,7 @@ p,
 
 .error {
   padding: 1rem 0;
-  color: rgba(175, 37, 21, 0.971);
+  color: #af2515f8;
   font-size: 20px;
   font-weight: 700;
   font-family: 'Verdana', sans-serif;
@@ -254,6 +256,11 @@ p,
     gap: 0.5rem;
     grid-template-rows: 3fr;
   }
+  /* .grid-line {
+    width: 0;
+    border-right: 1px solid #0c7c7e;
+    height: 600px;
+  } */
   .conversions {
     display: block;
   }
@@ -288,5 +295,15 @@ p,
   }
   .forecast {
     display: block;
+    width: 1fr;
+    margin-right: 0.5rem;
+    border-right: 1px solid #0c7c7e;
+    height: 300px;
+    text-align: center;
+  }
+
+  .forecast:last-child {
+    border-right: none;
+    margin-right: none;
   }
 }
