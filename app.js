@@ -13,12 +13,20 @@ const getLocation = (event, location) => {
   // let location = document.querySelector('#location');
   let weatherInfo = document.querySelector('.weather');
   let article = document.querySelector('.three_day_forecast');
-  let main = document.querySelectorAll('body *');
+
+
+  if (location.value === '' || location.value=== null) {
+    message = 'Error !! Location cannot be empty.Please enter a Location';
+    renderError(message);
+    return;
+  }
   // article.innerHTML = '';
   // weatherInfo.innerHTML = '';
   // console.log(event.target, 'location=', location);
 
   let city = location.value;
+  
+
   location.value = '';
   console.log(city);
   city = city[0].toUpperCase() + city.slice(1);
@@ -49,16 +57,17 @@ const fetchLocationWeather = async (url, city) => {
 /**
  *
  * @param(object) apiresponse object
- *
- * @return
+ * @param(article) to update the DOM to display the results of the fetch
+ * @modifies(DOM) the side effect is the modification of the DOM with the
+ * results
  */
+
 const getThreeDayForecast = (response, article) => {
   const { weather } = response;
-  console.log(response);
+  // console.log(response);
   // const article = document.querySelector('.three_day_forecast');
   article.innerHTML = '';
   const days = ['Today', 'Tomorrow', 'Dayafter'];
-  // weather[0].avgtempF, weather[0].maxtempF, weather[0].mintempF;
   const daysOfWeek = [
     'Sunday ',
     'Monday ',
@@ -72,13 +81,6 @@ const getThreeDayForecast = (response, article) => {
   let count = 0,
     dateNum = dateNow.getDay();
 
-  // const forecastArray = [{
-  //   dayDesc:'${days[0]}', dayName:'${daysOfWeek[datenum%7]}',
-  // }]
-  console.log('dateNum +1 %7 =', dateNum % 7);
-
-  console.log('in 3days =', dateNum, days, daysOfWeek, weather);
-
   weather.forEach(({ avgtempF, maxtempF, mintempF, date }, index) => {
     console.log('average =', avgtempF, maxtempF, mintempF, index);
     article.innerHTML += `<div class="forecast" style="display:block;"id="${
@@ -88,12 +90,14 @@ const getThreeDayForecast = (response, article) => {
     count++;
   });
 };
+
 /**
  *
  * @param(object) apiresponse object
- *
+ *  @param(string) city
  * @@modifies (DOM)by adding location weather and three day forecast
  */
+
 const renderWeatherData = (response, city) => {
   const { current_condition, weather, nearest_area } = response;
   const { areaName, region, country } = nearest_area[0];
@@ -150,20 +154,28 @@ const renderWeatherData = (response, city) => {
 };
 
 /****
- *@params(event)
+ * @param(event) event object to get the value of the temperature
+ * @modifies(DOM) calcuates the temperature of user's selected scale and
+ * displays it in the DOM
  */
 const temperatureConverter = (event) => {
   let temperatureInput = document.querySelector('#temperature');
   const result = document.querySelector('.result');
 
-  const checkedButton = document.querySelector(
-    'input[name="convert"]:checked '
-  );
+  if (temperatureInput.value === '' || temperatureInput.value === null) {
+    message = 'Temperature cannot be empty !!! Please enter a number';
+    renderError(message);
+    return;
+  }
 
-  let checkedValue = checkedButton.value;
   let temptoConvert = Number(temperatureInput.value);
   let celsiusFahrenheitResult = 0;
   let temperatureNotation = '';
+
+  const checkedButton = document.querySelector(
+    'input[name="convert"]:checked '
+  );
+  let checkedValue = checkedButton.value;
 
   // console.log(typeof temptoConvert, temptoConvert);
   result.innerHTMl = '';
@@ -194,7 +206,14 @@ const temperatureConverter = (event) => {
  *
  */
 const renderError = (error) => {
-  error;
+  const errorMessage = document.querySelector('.error');
+
+  errorMessage.innerHTML = `<p>${error}</p>`;
+  console.log(error);
+  setTimeout(() => {
+    //  removes element from DOM
+    errorMessage.style.display = 'none';
+  }, 3000);
 };
 
 window.addEventListener('DOMContentLoaded', (event) => {
@@ -217,7 +236,4 @@ window.addEventListener('DOMContentLoaded', (event) => {
     // console.log(event.target);
     temperatureConverter();
   });
-  // const convertBtn = document.querySelector('#conversion-btn');
-
-  // convertBtn.addEventListener('click', temperatureConverter);
 });
