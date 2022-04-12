@@ -7,11 +7,16 @@ const iconAltText = '';
  *
  *
  */
-const getLocation = (event) => {
+const getLocation = (event, location) => {
   event.preventDefault();
 
-  let location = document.querySelector('#location');
-  console.log(event.target);
+  // let location = document.querySelector('#location');
+  let weatherInfo = document.querySelector('.weather');
+  let article = document.querySelector('.three_day_forecast');
+  let main = document.querySelectorAll('body *');
+  // article.innerHTML = '';
+  // weatherInfo.innerHTML = '';
+  // console.log(event.target, 'location=', location);
 
   let city = location.value;
   location.value = '';
@@ -47,56 +52,101 @@ const fetchLocationWeather = async (url, city) => {
  *
  * @return
  */
-const getThreeDayForecast = (response) => {
+const getThreeDayForecast = (response, article) => {
   const { weather } = response;
-
-  const today = weather[0].date;
-  const tomorrow = weather[1].date;
-  const dayafter = weather[2].date;
-  weather[0].avgtempF,weather[0].maxtempF,weather[0].mintempF
-  const daysOfWeek = ['Sunday ', 'Monday ', 'Tueday ', 'Wednesday ', 'Thursday ', 'Friday', 'Saturday'];
+  console.log(response);
+  // const article = document.querySelector('.three_day_forecast');
+  article.innerHTML = '';
+  const days = ['Today', 'Tomorrow', 'Dayafter'];
+  // weather[0].avgtempF, weather[0].maxtempF, weather[0].mintempF;
+  const daysOfWeek = [
+    'Sunday ',
+    'Monday ',
+    'Tuesday ',
+    'Wednesday ',
+    'Thursday ',
+    'Friday',
+    'Saturday',
+  ];
   const dateNow = new Date();
-  let dateNum = dateNow.getDay();
+  let count = 0,
+    dateNum = dateNow.getDay();
 
-  today
+  // const forecastArray = [{
+  //   dayDesc:'${days[0]}', dayName:'${daysOfWeek[datenum%7]}',
+  // }]
+  console.log('dateNum +1 %7 =', dateNum % 7);
+
+  console.log('in 3days =', dateNum, days, daysOfWeek, weather);
+
+  weather.forEach(({ avgtempF, maxtempF, mintempF, date }, index) => {
+    console.log('average =', avgtempF, maxtempF, mintempF, index);
+    article.innerHTML += `<div class="forecast" style="display:block;"id="${
+      days[index]
+    }"><p>${days[index]}<p>${daysOfWeek[dateNum + (count % 7)]}</p><p>
+    (${date})</p><p>Avg Temp:${avgtempF}</p><p>Max Temp:${maxtempF}</p><p>Min Temp:${mintempF}</p></div>`;
+    count++;
+  });
 };
 /**
  *
  * @param(object) apiresponse object
  *
- * @return
+ * @@modifies (DOM)by adding location weather and three day forecast
  */
 const renderWeatherData = (response, city) => {
   const { current_condition, weather, nearest_area } = response;
   const { areaName, region, country } = nearest_area[0];
 
-  console.log(weather);
+  const val = city === areaName[0].value ? 'Area' : 'Nearest Area';
 
-  const chanceofrain = weather[0].hourly[0].chanceofrain;
-  const chanceofsunshine = weather[0].hourly[0].chanceofsunshine;
-  const chanceofsnow = weather[0].hourly[0].chanceofsnow;
+  console.log('in renderdata =', val, areaName[0].value, city);
+  let chanceOfRain = 0,
+    chanceOfSnow = 0,
+    chanceOfSunshine = 0;
+
+  weather.forEach((w, index) => {
+    chanceOfRain += w.hourly[index].chanceofrain;
+    chanceOfSunshine += w.hourly[index].chanceofsunshine;
+    chanceOfSnow += w.hourly[index].chanceofsnow;
+  });
+
+  chanceOfRain /= weather[0].hourly.length;
+  chanceOfSnow /= weather[0].hourly.length;
+  chanceOfSunshine /= weather[0].hourly.length;
+
   const weatherInfo = document.querySelector('.location-data');
   const image = document.createElement('img');
 
   weatherInfo.innerHTML = '';
 
-  if (chanceofsunshine > 50) {
+  if (chanceOfSunshine > 50) {
     image.src = './assets/icons8-summer.gif';
     image.alt = 'sun';
-  } else if (chanceofrain > 50) {
+  } else if (chanceOfRain > 50) {
     image.src = './assets/icons8-torrential-rain.gif';
     image.alt = 'rain';
-  } else if (chanceofsnow > 50) {
+  } else if (chanceOfSnow > 50) {
     image.src = './assets/icons8-light-snow.gif';
     image.alt = 'snow';
   }
-  image.style.textAlign = 'center';
-  weatherInfo.append(image);
+  // image.style.textAlign = 'center';
+
+  // image.style.margin = ' 1rem 0 auto';
+  // image.class = 'icon';
+  // weatherInfo.append(image);
 
   // div.innerHTML += '<img src="'+img.src+'" />';
-  weatherInfo.innerHTML += `<br><strong>${city}</strong></h2><p><strong>Nearest Area:</strong>${areaName[0].value}</p><p> <strong>Region:</strong>${region[0].value}<p><p><strong>Country:</strong>${country[0].value}<p><p><strong>Feels Like:</strong>${current_condition[0].FeelsLikeF}°F</p><p><strong>Chance of Sunshine:</strong>${weather[0].hourly[0].chanceofsunshine}</p><p><strong>Chance of Rain:</strong>${weather[0].hourly[0].chanceofrain}</p><p><strong>Chance of Snow:</strong>${weather[0].hourly[0].chanceofsnow}</p>`;
+  weatherInfo.innerHTML += `<div class="card"><img class="icon" src=${image.src} alt=${image.alt}/><div class="container"><p><strong>${city}</strong></h2><p><strong>${val}:</strong>${areaName[0].value}</p><p><strong>Region:</strong>${region[0].value}<p><p><strong>Country:</strong>${country[0].value}<p><p><strong>Feels Like:</strong>${current_condition[0].FeelsLikeF}°F</p><p><strong>Chance of Sunshine:</strong>${weather[0].hourly[0].chanceofsunshine}</p><p><strong>Chance of Rain:</strong>${weather[0].hourly[0].chanceofrain}</p><p><strong>Chance of Snow:</strong>${weather[0].hourly[0].chanceofsnow}</p></div></div>`;
 
-  getThreeDayForecast(response);
+  const article = document.querySelector('.three_day_forecast');
+  getThreeDayForecast(response, article);
+  // setTimeout(() => {
+  //  removes element from DOM
+
+  // hides element (still takes up space on page)
+  // box.style.visibility = 'hidden';
+  // }, 10000);
 };
 
 /****
@@ -112,11 +162,13 @@ const temperatureConverter = (event) => {
 
   let checkedValue = checkedButton.value;
   let temptoConvert = Number(temperatureInput.value);
-  console.log(typeof temptoConvert, temptoConvert);
-  result.innerHTMl = '';
-  temperatureInput.value = '';
   let celsiusFahrenheitResult = 0;
   let temperatureNotation = '';
+
+  // console.log(typeof temptoConvert, temptoConvert);
+  result.innerHTMl = '';
+  temperatureInput.value = '';
+
   // let errorMessage = false;
 
   if (checkedValue === 'celsius') {
@@ -130,29 +182,39 @@ const temperatureConverter = (event) => {
   result.innerHTML = `Temperature is:${celsiusFahrenheitResult.toFixed(
     2
   )}<sup>&deg;</sup>${temperatureNotation}`;
+
+  setTimeout(() => {
+    //  removes element from DOM
+    result.style.display = 'none';
+  }, 30000);
 };
 
 /****
  *@params(string) error message
+ *
  */
 const renderError = (error) => {
-  console.log(error);
+  error;
 };
 
 window.addEventListener('DOMContentLoaded', (event) => {
   console.log('DOM fully loaded and parsed');
 
-  const userInput = document.getElementById('user-inputs');
+  const userInput = document.querySelector('#user-inputs');
+  console.log(userInput);
   const submitLocation = document.querySelector('#submit-location');
-
-  submitLocation.addEventListener('click', getLocation);
-
   const tempForm = document.querySelector('#temperature-input');
+  let location = document.querySelector('#location');
 
+  // submitLocation.addEventListener('click', getlocation);
+  userInput.addEventListener('submit', (event) => {
+    // console.log(event.target);
+
+    getLocation(event, location);
+  });
   tempForm.addEventListener('submit', (event) => {
     event.preventDefault();
-    console.log(event.target);
-
+    // console.log(event.target);
     temperatureConverter();
   });
   // const convertBtn = document.querySelector('#conversion-btn');
