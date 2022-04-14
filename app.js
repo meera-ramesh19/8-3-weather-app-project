@@ -59,7 +59,6 @@ const fetchLocationWeather = async (url, city) => {
  */
 
 const renderSearchHistory = (city, tempFeel) => {
-  console.log('we are in');
   // const { current_condition, areaName } = responseObj;
 
   // searchedHistory[city] = current_condition[0].FeelsLikeF;
@@ -163,8 +162,8 @@ const renderWeatherData = (response, city) => {
   const { current_condition, weather, nearest_area } = response;
   const { areaName, region, country } = nearest_area[0];
 
-  const val = city === areaName[0].value ? 'Area' : 'Nearest Area';
-
+  // const val = city === areaName[0].value ? 'Area' : 'Nearest Area';
+  console.log(response);
   let chanceOfRain = 0,
     chanceOfSnow = 0,
     chanceOfSunshine = 0,
@@ -226,7 +225,7 @@ const renderWeatherData = (response, city) => {
   // image.class = 'icon';
   // weatherInfo.append(image);
 
-  weatherInfo.innerHTML += `<div class="card"><img class="icon" src=${src} alt=${alt} /><br><div class="container"><h2 class="city"><strong>${city}</strong></h2><p><strong>${val}: </strong>${
+  weatherInfo.innerHTML += `<div class="card"><img class="icon" src=${src} alt=${alt} /><br><div class="container"><h2 class="city"><strong>${city}</strong></h2><p><strong>Nearest Area: </strong>${
     areaName[0].value
   }</p><p><strong>Region: </strong>${
     region[0].value
