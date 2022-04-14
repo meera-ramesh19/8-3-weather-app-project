@@ -49,11 +49,16 @@ body {
   width: 10rem;
   background-color: #0c7c7e;
   cursor: pointer;
+  color:black;
+  font-weight: 900px;
+  font-size: 20px;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
     rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
     rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
-
+.city {
+  padding: 1rem 0;
+}
 #location {
   padding: 1rem;
   border-radius: 10px;
@@ -67,7 +72,7 @@ body {
   margin: 0 auto;
   display: grid;
   grid-template-rows: repeat(2, 1fr);
-  grid-template-columns: 310px 150px;
+  grid-template-columns: 310px 180px;
   grid-gap: 0.5rem;
   justify-content: center;
   align-items: flex-start;
@@ -97,13 +102,6 @@ p,
   margin-bottom: 1rem;
 }
 
-/* #submit-city {
-  padding: 0.5rem;
-  width: 5rem;
-  border-radius: 10px;
-  background-color: #0c7c7e;
-} */
-
 .celsius,
 .fahrenheit {
   display: inline-block;
@@ -120,6 +118,7 @@ p,
 }
 
 .previous-history {
+  margin: 1rem 0 0 0.5rem;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px,
     rgba(0, 0, 0, 0.22) 0px 10px 10px;
 }
@@ -170,6 +169,10 @@ p,
   /* margin: 3rem auto 0 auto; */
 }
 
+.hidden {
+  display: none;
+}
+
 /* #today,
 #tomorrow,
 #dayafter { */
@@ -180,14 +183,10 @@ p,
   margin: 0 auto;
   padding-top: 2rem;
   text-align: center;
+  font-weight: 500;
   /* width: 50px; */
   /* border: 2px solid  #0c7c7e; */
 }
-
-/*
-.aside {
-  order: 1;
-}  */
 
 .error {
   padding: 1rem 0;
@@ -195,9 +194,8 @@ p,
   font-size: 20px;
   font-weight: 700;
   font-family: 'Verdana', sans-serif;
-  /* box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px,
-    rgba(0, 0, 0, 0.22) 0px 10px 10px; */
 }
+
 #conversion-btn {
   font-size: 20px;
   width: 6rem;
@@ -236,6 +234,19 @@ p,
   padding: 0.7rem;
 }
 
+.list-item {
+  padding: 0.5rem;
+  list-style: none;
+}
+.locationName {
+  text-decoration: none;
+  /* text-transform: uppercase; */
+  letter-spacing: 0.1;
+  color: black;
+  font-size: 18px;
+  font-weight: 600;
+}
+
 @media (min-width: 700px) {
   body {
     width: 100%;
@@ -249,7 +260,7 @@ p,
   }
 
   .main {
-    grid-template-columns: 300px 3fr 150px;
+    grid-template-columns: 250px 2fr 250px;
   }
   .three_day_forecast {
     grid-template-columns: repeat(3, 1fr);

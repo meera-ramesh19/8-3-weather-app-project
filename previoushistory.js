@@ -1,9 +1,13 @@
 
 
 // On app load, get all tasks from localStorage
-window.onload = loadTasks;
+currentList.querySelectorAll('*').forEach(node => {node.remove()});
+dailyForecast.querySelectorAll('*').forEach(node => {node.remove()});
 
-function loadTasks() {
+// /'<li class="tagBlocks"><a href="#" rel="' + value + '">' + key + '</a></li>'
+https://stackoverflow.com/questions/2566249/getting-value-from-key-pair-value-into-appended-property-using-jquery
+
+const loadTasks = () => {
   // Get the tasks from localStorage and convert it to an array
   let tasks = Array.from(JSON.parse(localStorage.getItem("tasks")));
 
@@ -12,18 +16,15 @@ function loadTasks() {
     const list = document.querySelector("ul");
     const li = document.createElement("li");
     li.innerHTML = `<a href="#">${city}</a>
-          <i class="fa fa-trash" onclick="removeTask(this)"></i>`;
+          <i class="fa fa-trash" onclick="removelink(this)"></i>`;
     list.insertBefore(li, list.children[0]);
   });
 }
 function addTask() {
-    const task = document.querySelector("form input");
+   
     const list = document.querySelector("ul");
     // return if task is empty
-    if (task.value === "") {
-      alert("Please add some task!");
-      return false;
-    }
+    
     // check is task already exist
     let tasks = Array.from(JSON.parse(localStorage.getItem("tasks")));
     // task already exist
