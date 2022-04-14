@@ -225,21 +225,19 @@ const renderWeatherData = (response, city) => {
   // image.class = 'icon';
   // weatherInfo.append(image);
 
-  weatherInfo.innerHTML += `<div class="card"><img class="icon" src=${src} alt=${alt} /><br><div class="container"><h2 class="city"><strong>${city}</strong></h2><p><strong>Nearest Area: </strong>${
+  weatherInfo.innerHTML += `<div class="card"><img class="icon" src=${src} alt=${alt}><br><div class="container"><h2 class="city"><strong>${city}</strong></h2><p><strong>Nearest Area: </strong>${
     areaName[0].value
   }</p><p><strong>Region: </strong>${
     region[0].value
-  }<p><p><strong>Country: </strong>${
+  }</p><p><strong>Country: </strong>${
     country[0].value
-  }<p><p><strong>Feels Like: </strong>${
+  }</p><p><strong>Feels Like: </strong>${
     current_condition[0].FeelsLikeF
-  }<sup>&deg;</sup></p><p><strong>Chance of Sunshine: </strong>${chanceOfSunshine.toFixed(
-    0
-  )}</p><p><strong>Chance of Rain: </strong>${chanceOfRain.toFixed(
+  }<sup>&deg;</sup></p><p><strong>Chance of Sunshine: </strong>{chanceOfSunshine.toFixed(0)}</p><p><strong>Chance of Rain: </strong>${chanceOfRain.toFixed(
     0
   )}</p><p><strong>Chance of Snow: </strong>${chanceOfSnow.toFixed(
     0
-  )}</p></div>`;
+  )}</p></div></div>`;
 
   const article = document.querySelector('.three_day_forecast');
   getThreeDayForecast(response, article);
