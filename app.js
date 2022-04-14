@@ -233,7 +233,7 @@ const renderWeatherData = (response, city) => {
     country[0].value
   }</p><p><strong>Feels Like: </strong>${
     current_condition[0].FeelsLikeF
-  }<sup>&deg;</sup></p><p><strong>Chance of Sunshine: </strong>{chanceOfSunshine.toFixed(0)}</p><p><strong>Chance of Rain: </strong>${chanceOfRain.toFixed(
+  }<sup>&deg;</sup></p><p><strong>Chance of Sunshine: </strong>${chanceOfSunshine.toFixed(0)}</p><p><strong>Chance of Rain: </strong>${chanceOfRain.toFixed(
     0
   )}</p><p><strong>Chance of Snow: </strong>${chanceOfSnow.toFixed(
     0
