@@ -11,16 +11,50 @@ body {
   line-height: 1.2;
   font-size: 1rem;
   margin: 0 auto;
-  /* max-width: 1200px; */
+  max-width: 1000px;
   width: 100%;
   min-height: 10vh;
   height: 100%;
   display: flex;
   flex-direction: column;
   background: #809a9a;
-  /* max-width: 80vw; */
   font-family: Helvetica, Arial, sans-serif;
   overflow: auto;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+body[theme='light'] {
+  background: #b2dfdb;
+}
+
+.heading[theme='light'] {
+  background: #aaf0d1;
+}
+#hybrid {
+  visibility: hidden;
+}
+
+#theme-toggle {
+  visibility: hidden;
+}
+
+#theme-toggle + label {
+  content: '';
+  display: inline-block;
+  cursor: pointer;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  transition: all 0.3s ease-in-out;
+}
+
+#theme-toggle:not(:checked) + label {
+  background-color: gold;
+}
+
+#theme-toggle:checked + label {
+  background-color: transparent;
+  box-shadow: inset -18px -16px 1px 1px #fff;
 }
 
 .header {
@@ -31,6 +65,11 @@ body {
   /* max-width: 120px; */
   width: 100%;
   padding: 1rem;
+  display: flex;
+}
+.heading {
+  display: block;
+  margin: 0 auto;
 }
 .input-wrapper {
   font-family: Helvetica, Arial, sans-serif;
@@ -105,14 +144,11 @@ p,
 .celsius,
 .fahrenheit {
   display: inline-block;
-  /* margin-left:1rem; */
   text-align: center;
 }
 
-/* .temperature-converter, */
 .location-data,
 .previous-history {
-  /* border: 1px solid black; */
   text-align: center;
   padding: 1rem;
 }
@@ -123,13 +159,8 @@ p,
     rgba(0, 0, 0, 0.22) 0px 10px 10px;
 }
 
-/* 
-.temperature-converter {
-  order: 2;
-} */
 .location-data {
   margin: 1rem 0;
-  /* padding: 0 rem; */
   display: grid;
   grid-template-columns: 2fr;
   display: inline-grid;
@@ -153,7 +184,6 @@ p,
   font-weight: 700;
   display: grid;
   padding: 0 2rem;
-  /* grid-template-columns: repeat(3, 1fr); */
 }
 .three_day_forecast {
   display: grid;
@@ -173,19 +203,11 @@ p,
   display: none;
 }
 
-/* #today,
-#tomorrow,
-#dayafter { */
 .forecast {
-  /* display: block;
-  align-items: center;
-  justify-content: center; */
   margin: 0 auto;
   padding-top: 2rem;
   text-align: center;
   font-weight: 500;
-  /* width: 50px; */
-  /* border: 2px solid  #0c7c7e; */
 }
 
 .error {
@@ -240,11 +262,113 @@ p,
 }
 .locationName {
   text-decoration: none;
-  /* text-transform: uppercase; */
   letter-spacing: 0.1;
   color: black;
   font-size: 18px;
   font-weight: 600;
+}
+
+/******MODAL INFO***************/
+
+button {
+  background: none;
+  padding: 0em 0.9em;
+  color: #fff;
+  border: 0.1em solid black;
+  border-radius: 5px;
+  padding: 1rem;
+  cursor: pointer;
+  opacity: 0.4;
+  font-size: 1.2rem;
+}
+
+.button:hover {
+  background: none;
+  transition: border 1s;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0%;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+  background-color: rgba(255, 255, 255 0.5);
+}
+
+.modal-body {
+  width: 100%;
+  align-items: center;
+  height: 100vh;
+}
+
+.modal-content {
+  margin: 0 auto;
+  width: 60%;
+  box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 7px 20px 0 rgba(0, 0, 0, 0.17);
+  animation-name: modalopen;
+  animation-duration: var(--modal-duration);
+}
+
+.modal-header h2,
+.modal-footer h3 {
+  margin: 0;
+  text-align: center;
+}
+
+.modal-header {
+  background: var(--modal-color);
+  padding: 15px;
+  color: #fff;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.modal-body {
+  padding: 20px 60px;
+  background: black;
+  opacity: 0.8;
+  color: #fff;
+  text-align: center;
+}
+
+.modal-footer {
+  background: var(--modal-color);
+  padding: 10px;
+  color: #fff;
+  text-align: center;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.close {
+  color: #ccc;
+  float: right;
+  font-size: 30px;
+  color: #fff;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+@keyframes modalopen {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+table {
+  grid-template-columns: repeat(9, 1fr);
+  grid-template-rows: repeat(10, 100%);
 }
 
 @media (min-width: 900px) {
@@ -268,11 +392,7 @@ p,
     gap: 0.5rem;
     grid-template-rows: 3fr;
   }
-  /* .grid-line {
-    width: 0;
-    border-right: 1px solid #0c7c7e;
-    height: 600px;
-  } */
+
   .conversions {
     display: block;
   }
@@ -280,14 +400,14 @@ p,
     order: 1;
     margin-top: 1rem;
   }
+
   .location-data {
     order: 2;
-    /* grid-template-columns: 300px 3fr 150px; */
     grid-template-columns: 3fr;
-    /* padding: 0 3rem; */
     max-width: 600px;
     width: 100%;
   }
+
   .icon {
     margin: 0 auto;
     text-align: center;
@@ -302,9 +422,9 @@ p,
   .celsius,
   .fahrenheit {
     display: block;
-    /* margin-left:1rem; */
     text-align: center;
   }
+
   .forecast {
     display: block;
     width: 1fr;

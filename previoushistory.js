@@ -1,66 +1,56 @@
+/**
+ *
+ * @param(object) apiresponse object
+ * @param(string) city
+ * @modifies(DOM) the side effect is populating the previous history section
+ *
+ */
 
+const renderSearchHistory = (city, tempFeel) => {
+  // const { current_condition, areaName } = responseObj;
 
-// On app load, get all tasks from localStorage
-currentList.querySelectorAll('*').forEach(node => {node.remove()});
-dailyForecast.querySelectorAll('*').forEach(node => {node.remove()});
+  // searchedHistory[city] = current_condition[0].FeelsLikeF;
+  searchedHistory[city] = tempFeel;
 
-// /'<li class="tagBlocks"><a href="#" rel="' + value + '">' + key + '</a></li>'
-https://stackoverflow.com/questions/2566249/getting-value-from-key-pair-value-into-appended-property-using-jquery
+  storedHistory.push(searchedHistory);
 
-const loadTasks = () => {
-  // Get the tasks from localStorage and convert it to an array
-  let tasks = Array.from(JSON.parse(localStorage.getItem("tasks")));
+  // window.localStorage.setItem('storedHistory', JSON.stringify(storedHistory));
+  // console.log(localStorage);
 
-  // Loop through the tasks and add them to the list
-  tasks.forEach(task => {
-    const list = document.querySelector("ul");
-    const li = document.createElement("li");
-    li.innerHTML = `<a href="#">${city}</a>
-          <i class="fa fa-trash" onclick="removelink(this)"></i>`;
-    list.insertBefore(li, list.children[0]);
+  const ul = document.querySelector('.search-history');
+
+  const noSearchMessage = document.querySelector('.noSearch');
+
+  ul.querySelectorAll('*').forEach((node) => {
+    node.remove();
   });
-}
-function addTask() {
-   
-    const list = document.querySelector("ul");
-    // return if task is empty
-    
-    // check is task already exist
-    let tasks = Array.from(JSON.parse(localStorage.getItem("tasks")));
-    // task already exist
-    tasks.forEach(todo => {
-      if (todo.task === task.value) {
-        alert("Task already exist!");
-        task.value = "";
-        return;
-      }
-    });
-  
-    // add task to local storage
-    localStorage.setItem("tasks", JSON.stringify([...JSON.parse(localStorage.getItem("tasks") || "[]"), { task: task.value, completed: false }]));
-  
-    // create list item, add innerHTML and append to ul
-    const li = document.createElement("li");
-    li.innerHTML = `<input type="checkbox" onclick="taskComplete(this)" class="check">
-        <input type="text" value="${task.value}" class="task" onfocus="getCurrentTask(this)" onblur="editTask(this)">
-        <i class="fa fa-trash" onclick="removeTask(this)"></i>`;
-    list.insertBefore(li, list.children[0]);
-    // clear input
-    task.value = "";
+
+  for (const [key, value] of Object.entries(searchedHistory)) {
+    noSearchMessage.classList.add('hidden');
+
+    const li = document.createElement('li');
+    li.style.padding = '0.5rem';
+    li.setAttribute('class', 'list-item');
+    li.setAttribute('data-key', `${key}`);
+    li.innerHTML += `<a class="locationName" href="javascript:void(0)">${key}</a><span>-${value}</span> `;
+    // <i class="fa-solid fa-trash fa-2xl" style="width:auto;height:auto"></i>
+    // ul.append(li);
+    const item = document.querySelector(`[data-key='${key}']`);
+    if (item) {
+      ul.replaceChild(li, item);
+    } else {
+      ul.append(li);
+    }
   }
+  console.log(searchedHistory);
+  const searchHistoryList = document.querySelectorAll('.search-history li');
 
-
-
-
-
-function removeTask(event) {
-    let tasks = Array.from(JSON.parse(localStorage.getItem(&quot;tasks&quot;)));
-    tasks.forEach(task =&gt; {
-      if (task.task === event.parentNode.children[1].value) {
-        // delete task
-        tasks.splice(tasks.indexOf(task), 1);
-      }
+  Array.from(searchHistoryList).forEach((name) => {
+    name.addEventListener('click', function (e) {
+      e.preventDefault();
+      searchedCity = e.target.innerText;
+      const locationUrl = `https://wttr.in/${searchedCity}?format=j1`;
+      fetchLocationWeather(locationUrl, searchedCity);
     });
-    localStorage.setItem(&quot;tasks&quot;, JSON.stringify(tasks));
-    event.parentElement.remove();
-  }
+  });
+};

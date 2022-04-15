@@ -14,31 +14,34 @@
    <script src="https://kit.fontawesome.com/46b13243e4.js" crossorigin="anonymous"></script>
     <title>City Weather App</title>
     <link rel="stylesheet" href="style.css">
-    <script defer src="app.js"></script>
+    <script defer src="./app.js"></script>
+    <!-- <script defer src="./locationinfo.js"></script>
+    <script defer src="./renderingData.js"></script>
+    <script defer src="./previousHistory.js"></script> -->
+    <!-- <script defer src="./tempConverter.js"></script> -->
 </head>
-<body>
-    
+<body class="backgrImage">
+ 
      <header class="header">
-      
+      <div class="heading">
          <h1 class="title">Weather App</h1>
-      
-        <!-- <section class="input-container"> -->
          <form id="user-inputs">
-           <!-- <section class="input-wrapper"> -->
               <p>Pick a Location </p>
               <input type="text" placeholder="Enter a city... .." id="location"  class="location"/>
-            <!-- </section> -->
              <input type="submit" id="submit-location" value="Get Weather" />
-             
          </form>
-        <!-- </section> -->
+
+        </div>
+         <div class="container">
+          <input type="checkbox" id="theme-toggle">
+          <label for="theme-toggle"></label>
+        </div>
      </header>
-
+    
      <section class="error"></section>
+     <section class="status">
+      <section class="main" >
 
-     <section class="main" >
-         <!-- <section class="main"> -->
-       
         <aside class="temperature-converter mob"> 
 
           <form id="temperature-input">
@@ -66,26 +69,14 @@
           <article class="location-data" >
             Choose a location to view the weather
            <div class="weather" > 
-             
            </div>
           </article>
            
-           <article class="three_day_forecast">
-               <!-- <div class="forecast" id="today">
-                  
-               </div>
-               <div class="forecast" id="tomorrow">
-                 
-               </div>
-               <div class="forecast" id="dayafter">
-                  
-               </div> -->
+           <article class="three_day_forecast hidden">
            </article>
-          
          </main>
 
         <aside class="previous-history">
-           <!-- <section>Previous Searches</section> -->
            <section class="history">Previous Searches
             <p class="noSearch">No previous searches</p>
             <ul class="search-history">
@@ -93,10 +84,11 @@
             </ul>
            </section>
          </aside>
-      <!-- </section> -->
+      
       </section>
-     <footer class="footer">
+    </section>
+    <footer class="footer">
         <p><small>&copy; Copyright Meera Ramesh</small></p>
-     </footer>
+    </footer>
 </body>
 </html>

@@ -1,6 +1,10 @@
 const BASE_URL = 'https://wttr.in/';
 const searchedHistory = {};
 let storedHistory = [];
+document.getElementById('theme-toggle').addEventListener('click', (e) => {
+  const checked = e.target.checked;
+  document.body.setAttribute('theme', checked ? 'dark' : 'light');
+});
 /***
  *
  * @params (object) event
@@ -10,7 +14,6 @@ let storedHistory = [];
 const getLocation = (event, location) => {
   event.preventDefault();
 
-  // let location = document.querySelector('#location');
   let weatherInfo = document.querySelector('.weather');
   let article = document.querySelector('.three_day_forecast');
 
@@ -21,7 +24,6 @@ const getLocation = (event, location) => {
   }
 
   let city = location.value;
-  // city = city[0].toUpperCase() + city.slice(1);
   location.value = '';
 
   const locationUrl = `https://wttr.in/${city}?format=j1`;
@@ -47,7 +49,6 @@ const fetchLocationWeather = async (url, city) => {
   } catch {
     renderError();
   }
-  // return data;
 };
 
 /**
@@ -85,14 +86,14 @@ const renderSearchHistory = (city, tempFeel) => {
     li.setAttribute('class', 'list-item');
     li.setAttribute('data-key', `${key}`);
     li.innerHTML += `<a class="locationName" href="javascript:void(0)">${key}</a><span>-${value}</span> `;
-    // <i class="fa-solid fa-trash fa-2xl" style="width:auto;height:auto"></i>
-    // ul.append(li);
-    const item = document.querySelector(`[data-key='${key}']`);
-    if (item) {
-      ul.replaceChild(li, item);
-    } else {
-      ul.append(li);
-    }
+
+    ul.append(li);
+    // const item = document.querySelector(`[data-key='${key}']`);
+    // if (item) {
+    //   ul.replaceChild(li, item);
+    // } else {
+    //   ul.append(li);
+    // }
   }
   console.log(searchedHistory);
   const searchHistoryList = document.querySelectorAll('.search-history li');
@@ -118,7 +119,6 @@ const renderSearchHistory = (city, tempFeel) => {
 const getThreeDayForecast = (response, article) => {
   const { weather } = response;
 
-  // const article = document.querySelector('.three_day_forecast');
   article.innerHTML = '';
   const days = ['Today', 'Tomorrow', 'Dayafter'];
   const daysOfWeek = [
@@ -130,6 +130,7 @@ const getThreeDayForecast = (response, article) => {
     'Friday',
     'Saturday',
   ];
+  article.classList.remove('hidden');
   const dateNow = new Date();
   let count = 0,
     dateNum = dateNow.getDay();
@@ -161,8 +162,11 @@ const getThreeDayForecast = (response, article) => {
 const renderWeatherData = (response, city) => {
   const { current_condition, weather, nearest_area } = response;
   const { areaName, region, country } = nearest_area[0];
-
-  // const val = city === areaName[0].value ? 'Area' : 'Nearest Area';
+  const bgImage = ['rain.gif', 'sun.gif', 'snow.gif'];
+  const val =
+    city.toLowerCase() === areaName[0].value.toLowerCase()
+      ? 'Area'
+      : 'Nearest Area';
   console.log(response);
   let chanceOfRain = 0,
     chanceOfSnow = 0,
@@ -219,21 +223,16 @@ const renderWeatherData = (response, city) => {
     src = './assets/icons8-light-snow.gif';
     alt = 'snow';
   }
-  // image.style.textAlign = 'center';
 
-  // image.style.margin = ' 1rem 0 auto';
-  // image.class = 'icon';
-  // weatherInfo.append(image);
-
-  weatherInfo.innerHTML += `<div class="card"><img class="icon" src=${src} alt=${alt}><br><div class="container"><h2 class="city"><strong>${city}</strong></h2><p><strong>Nearest Area: </strong>${
-    areaName[0].value
-  }</p><p><strong>Region: </strong>${
+  weatherInfo.innerHTML += `<div class="card"><img class="icon" src=${src} alt=${alt}><br><div class="container"><h2 class="city"><strong>${city}</strong></h2><p><strong>Nearest Area: </strong>${val}</p><p><strong>Region: </strong>${
     region[0].value
   }</p><p><strong>Country: </strong>${
     country[0].value
   }</p><p><strong>Feels Like: </strong>${
     current_condition[0].FeelsLikeF
-  }<sup>&deg;</sup></p><p><strong>Chance of Sunshine: </strong>${chanceOfSunshine.toFixed(0)}</p><p><strong>Chance of Rain: </strong>${chanceOfRain.toFixed(
+  }<sup>&deg;</sup></p><p><strong>Chance of Sunshine: </strong>${chanceOfSunshine.toFixed(
+    0
+  )}</p><p><strong>Chance of Rain: </strong>${chanceOfRain.toFixed(
     0
   )}</p><p><strong>Chance of Snow: </strong>${chanceOfSnow.toFixed(
     0
@@ -265,7 +264,7 @@ const temperatureConverter = (event) => {
     'input[name="convert"]:checked '
   );
   let checkedValue = checkedButton.value;
-
+  console.log(checkedValue);
   result.innerHTMl = '';
   temperatureInput.value = '';
 
@@ -281,9 +280,10 @@ const temperatureConverter = (event) => {
     2
   )}<sup>&deg;</sup>${temperatureNotation}`;
 
-  // setTimeout(() => {
-  //   result.style.display = 'none';
-  // }, 30000);
+  setTimeout(() => {
+    result.style.display = 'none';
+  }, 1000);
+  result.style.display = 'block';
 };
 
 /****
@@ -297,7 +297,8 @@ const renderError = (error) => {
   console.log(error);
   setTimeout(() => {
     errorMessage.style.display = 'none';
-  }, 3000);
+  }, 1000);
+  errorMessage.style.display = 'block';
 };
 
 window.addEventListener('DOMContentLoaded', (event) => {
@@ -337,3 +338,100 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
 // #efdecd-almond Color
 // #edc9af
+// gett DOM Elements
+
+//              const modalBody = document.querySelector(".modal-body");
+//              const modal = document.querySelector("#my-modal");
+//              const modalBtn = document.querySelector("#modal-btn");
+//              const closeBtn = document.querySelector(".close");
+
+//              // Events
+//              modalBtn.addEventListener("click", openModal);
+//              closeBtn.addEventListener("click", closeModal);
+//              window.addEventListener("click", outsideClick);
+
+//              // Open
+//              function openModal() {
+//                modal.style.display = "block";
+//                displayHourlyWeatherDetails(meals.recipe,meals.recipe.totalDaily, meals.recipe.totalNutrients);
+//              }
+
+//              // Close
+//              function closeModal() {
+//                modal.style.display = "none";
+//              }
+
+//              // Close If Outside Click
+//              function outsideClick(e) {
+//                if (e.target == modal) {
+//                  modal.style.display = "none";
+//                }
+//              }
+
+// const displayNutrients = (nutrientInfo,daily, nutrient) => {
+
+// document.querySelector('#modal-body').innerHTML=`
+//               <div id="hourlydata">
+//                  <table width="242" cellspacing="0" cellpadding="0">
+//                  <tbody>
+//                    <tr>
+//                      <td align="center" class="header">Nutrition Facts</td>
+//                    </tr>
+//                    <tr>
+//                      <td>
+//                        <div class="serving">Per <span class="highlighted">${(nutrientInfo.totalWeight/nutrientInfo.yield).toFixed(0)}</span> Serving Size</div>
+//                      </td>
+//                    </tr>
+//                    <tr style="height: 7px">
+//                      <td bgcolor="#000000"></td>
+//                    </tr>
+//                    <tr>
+//                      <td style="font-size: 7pt">
+//                        <div class="line">Amount Per Serving</div>
+//                      </td>
+//                    </tr>
+//                    <tr>
+//                      <td>
+//                        <div class="line">
+//                          <div class="label">Calories
+//                            <div class="weight">${(nutrientInfo.calories/nutrientInfo.yield).toFixed(0)}</div>
+//                          </div>
+//                          <div style="padding-top: 1px; float: right;" class="labellight">Calories from Fat
+//                               <span class="weights">${calFat}</span>
+//                          </div>
+//                        </div>
+//                      </td>
+//                    </tr>
+//                    <tr>
+//                      <td>
+//                        <div class="line">
+//                          <div class="dvlabel">% Daily Value<sup>*</sup></div>
+//                        </div>
+//                      </td>
+//                    </tr>
+//                    <tr>
+//                      <td>
+//                        <div class="line">
+//                          <div class="label">Total Fat <div class="weight">$  {fat}</div>
+//                          </div>
+//                          <div class="dv">${dailyFat}
+//                           </div>
+//                        </div>
+//                      </td>
+//                    </tr>
+
+ 
+
+ // table {
+// //   width: 300px;
+// //   border-collapse: collapse;
+// // }
+// // table, th, td {
+// //   border: 1px solid black;
+// // }
+// // th, td {
+// //   padding: 10px;
+// //   text-align: left;
+// // }
+
+//

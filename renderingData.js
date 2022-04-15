@@ -8,7 +8,7 @@
 
 const getThreeDayForecast = (response, article) => {
   const { weather } = response;
-  // console.log(response);
+
   // const article = document.querySelector('.three_day_forecast');
   article.innerHTML = '';
   const days = ['Today', 'Tomorrow', 'Dayafter'];
@@ -29,9 +29,16 @@ const getThreeDayForecast = (response, article) => {
     console.log('average =', avgtempF, maxtempF, mintempF, index);
     article.innerHTML += `<div class="forecast" style="display:block;"id="${
       days[index]
-    }"><p>${days[index]}<p>${daysOfWeek[dateNum + (count % 7)]}</p><p>
-      (${date})</p><p>Avg Temp:${avgtempF}</p><p>Max Temp:${maxtempF}</p><p>Min Temp:${mintempF}</p></div>`;
+    }"><p>${days[index]}<p>${
+      daysOfWeek[dateNum + (count % 7)]
+    }</p><p>(${date})</p><p>Avg Temp:${avgtempF}</p><p>Max Temp:${maxtempF}</p><p>Min Temp:${mintempF}</p><button class="three_hour">Hourly</button></div>`;
     count++;
+  });
+
+  const threeHourBtn = document.querySelector('.three_hour');
+  threeHourBtn.addEventListener('click', (event) => {
+    console.log(event.target, ' weather=', weather);
+    renderhourlyWeather(weather);
   });
 };
 
@@ -46,37 +53,62 @@ const renderWeatherData = (response, city) => {
   const { current_condition, weather, nearest_area } = response;
   const { areaName, region, country } = nearest_area[0];
 
-  const val = city === areaName[0].value ? 'Area' : 'Nearest Area';
-
-  console.log('in renderdata =', val, areaName[0].value, city);
+  // const val = city === areaName[0].value ? 'Area' : 'Nearest Area';
+  console.log(response);
   let chanceOfRain = 0,
     chanceOfSnow = 0,
-    chanceOfSunshine = 0;
+    chanceOfSunshine = 0,
+    src = '',
+    alt = '';
+  let hours = weather[0].hourly;
 
-  weather.forEach((w, index) => {
-    chanceOfRain += w.hourly[index].chanceofrain;
-    chanceOfSunshine += w.hourly[index].chanceofsunshine;
-    chanceOfSnow += w.hourly[index].chanceofsnow;
-  });
+  chanceOfSunshine =
+    hours.reduce((acc, val) => {
+      return (acc += Number(val.chanceofsunshine));
+    }, 0) / 8;
 
-  chanceOfRain /= weather[0].hourly.length;
-  chanceOfSnow /= weather[0].hourly.length;
-  chanceOfSunshine /= weather[0].hourly.length;
+  let maxSunshine = hours.reduce((acc, ele) => {
+    return acc > Number(ele.chanceofsunshine)
+      ? acc
+      : (acc = Number(ele.chanceofsunshine));
+  }, 0);
+
+  chanceOfSnow =
+    hours.reduce((acc, val) => {
+      return (acc += Number(val.chanceofsnow));
+    }, 0) / 8;
+
+  let maxSnow = hours.reduce((acc, ele) => {
+    return acc > Number(ele.chanceofsnow)
+      ? acc
+      : (acc = Number(ele.chanceofsnow));
+  }, 0);
+
+  chanceOfRain =
+    hours.reduce((acc, val) => {
+      return (acc += Number(val.chanceofrain));
+    }, 0) / 8;
+
+  let maxRain = hours.reduce((acc, ele) => {
+    return acc > Number(ele.chanceofrain)
+      ? acc
+      : (acc = Number(ele.chanceofrain));
+  }, 0);
 
   const weatherInfo = document.querySelector('.location-data');
-  const image = document.createElement('img');
+  // const image = document.createElement('img');
 
   weatherInfo.innerHTML = '';
 
-  if (chanceOfSunshine > 50) {
-    image.src = './assets/icons8-summer.gif';
-    image.alt = 'sun';
-  } else if (chanceOfRain > 50) {
-    image.src = './assets/icons8-torrential-rain.gif';
-    image.alt = 'rain';
-  } else if (chanceOfSnow > 50) {
-    image.src = './assets/icons8-light-snow.gif';
-    image.alt = 'snow';
+  if (maxSunshine > 50) {
+    src = './assets/icons8-summer.gif';
+    alt = 'sun';
+  } else if (maxRain > 50) {
+    src = './assets/icons8-torrential-rain.gif';
+    alt = 'rain';
+  } else if (maxSnow > 50) {
+    src = './assets/icons8-light-snow.gif';
+    alt = 'snow';
   }
   // image.style.textAlign = 'center';
 
@@ -84,15 +116,22 @@ const renderWeatherData = (response, city) => {
   // image.class = 'icon';
   // weatherInfo.append(image);
 
-  // div.innerHTML += '<img src="'+img.src+'" />';
-  weatherInfo.innerHTML += `<div class="card"><img class="icon" src=${image.src} alt=${image.alt}/><div class="container"><p><strong>${city}</strong></h2><p><strong>${val}:</strong>${areaName[0].value}</p><p><strong>Region:</strong>${region[0].value}<p><p><strong>Country:</strong>${country[0].value}<p><p><strong>Feels Like:</strong>${current_condition[0].FeelsLikeF}°F</p><p><strong>Chance of Sunshine:</strong>${weather[0].hourly[0].chanceofsunshine}</p><p><strong>Chance of Rain:</strong>${weather[0].hourly[0].chanceofrain}</p><p><strong>Chance of Snow:</strong>${weather[0].hourly[0].chanceofsnow}</p></div></div>`;
+  weatherInfo.innerHTML += `<div class="card"><img class="icon" src=${src} alt=${alt}><br><div class="container"><h2 class="city"><strong>${city}</strong></h2><p><strong>Nearest Area: </strong>${
+    areaName[0].value
+  }</p><p><strong>Region: </strong>${
+    region[0].value
+  }</p><p><strong>Country: </strong>${
+    country[0].value
+  }</p><p><strong>Feels Like: </strong>${
+    current_condition[0].FeelsLikeF
+  }<sup>&deg;</sup></p><p><strong>Chance of Sunshine: </strong>${chanceOfSunshine.toFixed(
+    0
+  )}</p><p><strong>Chance of Rain: </strong>${chanceOfRain.toFixed(
+    0
+  )}</p><p><strong>Chance of Snow: </strong>${chanceOfSnow.toFixed(
+    0
+  )}</p></div></div>`;
 
   const article = document.querySelector('.three_day_forecast');
   getThreeDayForecast(response, article);
-  // setTimeout(() => {
-  //  removes element from DOM
-
-  // hides element (still takes up space on page)
-  // box.style.visibility = 'hidden';
-  // }, 10000);
 };
