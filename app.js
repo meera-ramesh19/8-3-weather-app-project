@@ -4,6 +4,7 @@ let storedHistory = [];
 document.getElementById('theme-toggle').addEventListener('click', (e) => {
   const checked = e.target.checked;
   document.body.setAttribute('theme', checked ? 'dark' : 'light');
+  document.header.setAttribute('theme', checked ? 'dark' : 'light');
 });
 /***
  *
@@ -45,12 +46,44 @@ const fetchLocationWeather = async (url, city) => {
     renderWeatherData(data, city);
     const { current_condition } = data;
     const tempFeel = current_condition[0].FeelsLikeF;
+    console.log('after weather', city, tempFeel);
     renderSearchHistory(city, tempFeel);
-  } catch {
-    renderError();
+  } catch (error) {
+    // console.log('error');
+    renderError(error);
   }
 };
+/******
+ *
+ *
+ * @param(object) apiresponse object
+ */
 
+const renderhourlyWeather = (repsonseObj) => {
+  // const modalBody = document.querySelector('.modal-body');
+  // const modal = document.querySelector('#my-modal');
+  // const modalBtn = document.querySelector('#modal-btn');
+  // const closeBtn = document.querySelector('.close');
+  // // Events
+  // modalBtn.addEventListener('click', openModal);
+  // closeBtn.addEventListener('click', closeModal);
+  // window.addEventListener('click', outsideClick);
+  // // Open
+  // function openModal() {
+  //   modal.style.display = 'block';
+  //   console.log('HEy we are in the modal');
+  // }
+  // // Close
+  // function closeModal() {
+  //   modal.style.display = 'none';
+  // }
+  // // Close If Outside Click
+  // function outsideClick(e) {
+  //   if (e.target == modal) {
+  //     modal.style.display = 'none';
+  //   }
+  // }
+};
 /**
  *
  * @param(object) apiresponse object
@@ -65,7 +98,7 @@ const renderSearchHistory = (city, tempFeel) => {
   // searchedHistory[city] = current_condition[0].FeelsLikeF;
   searchedHistory[city] = tempFeel;
 
-  storedHistory.push(searchedHistory);
+  // storedHistory.push(searchedHistory);
 
   // window.localStorage.setItem('storedHistory', JSON.stringify(storedHistory));
   // console.log(localStorage);
@@ -135,21 +168,50 @@ const getThreeDayForecast = (response, article) => {
   let count = 0,
     dateNum = dateNow.getDay();
 
+  // const modalBody = document.querySelector('.modal-body');
+  const modal = document.getElementById('my-modal');
+  const modalBtn = document.getElementById('modal-btn');
+  const closeBtn = document.querySelector('.close');
+
+  console.log('modal =', modal, modalBtn, closeBtn);
+  // Events
+  // modalBtn.addEventListener('click', openModal);
+  // closeBtn.addEventListener('click', closeModal);
+  // window.addEventListener('click', outsideClick);
+
+  // //Open;
+  // const openModal = () => {
+  //   modal.style.display = 'block';
+  //   console.log('HEy we are in the modal');
+  // };
+
+  // // Close
+  // const closeModal = () => {
+  //   modal.style.display = 'none';
+  // };
+
+  // // Close If Outside Click
+  // const outsideClick = (e) => {
+  //   if (e.target == modal) {
+  //     modal.style.display = 'none';
+  //   }
+  // };
+
   weather.forEach(({ avgtempF, maxtempF, mintempF, date }, index) => {
     console.log('average =', avgtempF, maxtempF, mintempF, index);
     article.innerHTML += `<div class="forecast" style="display:block;"id="${
       days[index]
     }"><p>${days[index]}<p>${
       daysOfWeek[dateNum + (count % 7)]
-    }</p><p>(${date})</p><p>Avg Temp:${avgtempF}</p><p>Max Temp:${maxtempF}</p><p>Min Temp:${mintempF}</p><button class="three_hour">Hourly</button></div>`;
+    }</p><p>(${date})</p><p>Avg Temp:${avgtempF}</p><p>Max Temp:${maxtempF}</p><p>Min Temp:${mintempF}</p><button class="button" id="modal-btn">Hourly</button></div>`;
     count++;
   });
 
-  const threeHourBtn = document.querySelector('.three_hour');
-  threeHourBtn.addEventListener('click', (event) => {
-    console.log(event.target, ' weather=', weather);
-    renderhourlyWeather(weather);
-  });
+  // const threeHourBtn = document.querySelector('.three_hour');
+  // threeHourBtn.addEventListener('click', (event) => {
+  //   console.log(event.target, ' weather=', weather);
+  //   renderhourlyWeather(weather);
+  // });
 };
 
 /**
@@ -282,7 +344,7 @@ const temperatureConverter = (event) => {
 
   setTimeout(() => {
     result.style.display = 'none';
-  }, 1000);
+  }, 2000);
   result.style.display = 'block';
 };
 
@@ -297,7 +359,7 @@ const renderError = (error) => {
   console.log(error);
   setTimeout(() => {
     errorMessage.style.display = 'none';
-  }, 1000);
+  }, 2000);
   errorMessage.style.display = 'block';
 };
 
@@ -420,9 +482,41 @@ window.addEventListener('DOMContentLoaded', (event) => {
 //                      </td>
 //                    </tr>
 
- 
+//  <div id="my-modal" class="modal">
+//     <div class="modal-content">
+//       <div class="modal-header">
+//         <span class="close">&times;</span>
+//         <h2>Hourly forecast</h2>
+//       </div>
+//       <div class="modal-body" id="modal-body">
 
- // table {
+//    <table>
+//          <thead>
+//              <tr>
+//                  <th>Items</th>
+//                  <th>Expenditure</th>
+//              </tr>
+//          </thead>
+//          <tbody>
+//              <tr>
+//                  <td>Stationary</td>
+//                  <td>2,000</td>
+//              </tr>
+
+//          </tbody>
+//          <tfoot>
+//              <tr>
+//                  <th>Total</th>
+//                  <td>12,000</td>
+//              </tr>
+//          </tfoot>
+//      </table>
+
+//        <div class="modal-footer">
+//        <h3>Modal Footer</h3>
+//    </div>
+
+// table {
 // //   width: 300px;
 // //   border-collapse: collapse;
 // // }

@@ -27,7 +27,7 @@
          <h1 class="title">Weather App</h1>
          <form id="user-inputs">
               <p>Pick a Location </p>
-              <input type="text" placeholder="Enter a city... .." id="location"  class="location"/>
+              <input type="text" aria-label="City name" placeholder="Enter a city... .." id="location"  class="location"/>
              <input type="submit" id="submit-location" value="Get Weather" />
          </form>
 
@@ -46,8 +46,8 @@
 
           <form id="temperature-input">
               
-           <label for="temperature">Convert the temperature</label>
-           <input type="number" placeholder="Enter a number"
+           <label id="tempText" for="temperature">Convert the temperature</label>
+           <input type="number" aria-label="temperature value to convert " placeholder="Enter a number"
            class="temperature" id="temp-to-convert" />
 
             <section class="conversions"> 
@@ -60,28 +60,47 @@
                <input type="radio" id="to-f" name="convert" value="fahrenheit" />
             </section>
           </section>
-            <input type="submit" id="conversion-btn" value="Convert" />
+            <input aria-label="Convert temperature" type="submit" id="conversion-btn" value="Convert" />
             </form>
             <h4 class="result"></h4>
           </aside>
        
-        <main>
+        <main class="">
           <article class="location-data" >
             Choose a location to view the weather
-           <div class="weather" > 
+           <div class="weather  backgrImage" > 
            </div>
           </article>
            
            <article class="three_day_forecast hidden">
+            <!-- <div id="my-modal" class="modal">
+              This is a popup box
+              <div class="modal-content">
+                <div class="modal-header">
+                  <span aria-label="Close" class="close">&times;</span>
+                  <h2>Hourly forecast</h2>
+                </div>
+                <div class="modal-body" id="modal-body">
+          
+              
+               </div>
+          
+                 <div class="modal-footer">
+                   <h3>Modal Footer</h3>
+                </div>
+                </div>
+              </div> -->
            </article>
          </main>
 
         <aside class="previous-history">
            <section class="history">Previous Searches
             <p class="noSearch">No previous searches</p>
+            <nav>
             <ul class="search-history">
                
             </ul>
+          </nav>
            </section>
          </aside>
       

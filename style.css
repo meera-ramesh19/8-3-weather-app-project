@@ -22,14 +22,15 @@ body {
   overflow: auto;
   transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 }
-
+/* 
 body[theme='light'] {
   background: #b2dfdb;
 }
 
-.heading[theme='light'] {
-  background: #aaf0d1;
+.header[theme='light'] {
+  background-color: #aaf0d1;
 }
+
 #hybrid {
   visibility: hidden;
 }
@@ -42,8 +43,8 @@ body[theme='light'] {
   content: '';
   display: inline-block;
   cursor: pointer;
-  height: 40px;
-  width: 40px;
+  height: 50px;
+  width: 50px;
   border-radius: 50%;
   transition: all 0.3s ease-in-out;
 }
@@ -55,18 +56,19 @@ body[theme='light'] {
 #theme-toggle:checked + label {
   background-color: transparent;
   box-shadow: inset -18px -16px 1px 1px #fff;
-}
+} */
 
 .header {
   margin: 0 auto;
   border: 1px solid black;
   background-color: rgb(12, 124, 126);
   text-align: center;
-  /* max-width: 120px; */
+  max-width: 1200px;
   width: 100%;
   padding: 1rem;
   display: flex;
 }
+
 .heading {
   display: block;
   margin: 0 auto;
@@ -111,7 +113,7 @@ body[theme='light'] {
   margin: 0 auto;
   display: grid;
   grid-template-rows: repeat(2, 1fr);
-  grid-template-columns: 310px 180px;
+  grid-template-columns: 250px 140px;
   grid-gap: 0.5rem;
   justify-content: center;
   align-items: flex-start;
@@ -125,6 +127,7 @@ body[theme='light'] {
   margin-bottom: 1rem;
   text-align: center;
   width: 200px;
+  font-size: 15px;
 }
 
 .conversions {
@@ -140,7 +143,11 @@ p,
 .conversions {
   margin-bottom: 1rem;
 }
-
+#conversion-btn {
+  display: block;
+  text-align: center;
+  margin: 0 auto;
+}
 .celsius,
 .fahrenheit {
   display: inline-block;
@@ -158,12 +165,17 @@ p,
   box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px,
     rgba(0, 0, 0, 0.22) 0px 10px 10px;
 }
-
+.search-history {
+  overflow: hidden;
+  overflow-y: scroll;
+}
 .location-data {
   margin: 1rem 0;
-  display: grid;
-  grid-template-columns: 2fr;
-  display: inline-grid;
+  /* display:grid; */
+  grid-row: 1 / span 3;
+  grid-column: 1 / span 3;
+  /* grid-template-rows: 3fr; */
+  display: block;
   color: whitesmoke;
   border-radius: 5%;
   background-color: #4f4f4f;
@@ -180,7 +192,8 @@ p,
   margin: auto 1rem;
 }
 .weather {
-  font-size: 24px;
+  display: block;
+  font-size: 16px;
   font-weight: 700;
   display: grid;
   padding: 0 2rem;
@@ -234,7 +247,9 @@ p,
   padding: 0.5rem;
   border-radius: 10px;
 }
-
+#tempText {
+  font-size: 15px;
+}
 .footer {
   margin-top: auto;
 }
@@ -267,6 +282,12 @@ p,
   font-size: 18px;
   font-weight: 600;
 }
+/* .previous-history {
+  order: 2;
+}
+.location-data {
+  order: 3;
+} */
 
 /******MODAL INFO***************/
 
@@ -392,7 +413,9 @@ table {
     gap: 0.5rem;
     grid-template-rows: 3fr;
   }
-
+  #tempText {
+    font-size: 20px;
+  }
   .conversions {
     display: block;
   }
