@@ -11,7 +11,6 @@ let storedHistory = [];
  * @returns  No return.
  *
  */
-
 const getLocation = (event, location) => {
   event.preventDefault();
 
@@ -43,7 +42,6 @@ const getLocation = (event, location) => {
  * @return No return
  *
  */
-
 const fetchLocationWeather = async (url, city) => {
   try {
     const res = await fetch(url);
@@ -64,32 +62,7 @@ const fetchLocationWeather = async (url, city) => {
  * @param(object) apiresponse object - repsonse object from the api
  * @returns No returns
  */
-
-const renderhourlyWeather = (repsonseObj) => {
-  // const modalBody = document.querySelector('.modal-body');
-  // const modal = document.querySelector('#my-modal');
-  // const modalBtn = document.querySelector('#modal-btn');
-  // const closeBtn = document.querySelector('.close');
-  // // Events
-  // modalBtn.addEventListener('click', openModal);
-  // closeBtn.addEventListener('click', closeModal);
-  // window.addEventListener('click', outsideClick);
-  // // Open
-  // function openModal() {
-  //   modal.style.display = 'block';
-  //   console.log('HEy we are in the modal');
-  // }
-  // // Close
-  // function closeModal() {
-  //   modal.style.display = 'none';
-  // }
-  // // Close If Outside Click
-  // function outsideClick(e) {
-  //   if (e.target == modal) {
-  //     modal.style.display = 'none';
-  //   }
-  // }
-};
+const renderhourlyWeather = (repsonseObj, btndisplay) => {};
 
 /**
  * renderSearchHistory - a function to display the location the user
@@ -101,7 +74,6 @@ const renderhourlyWeather = (repsonseObj) => {
  * @modifies(DOM) the function is populating the previous history section
  * @returns - No returns
  */
-
 const renderSearchHistory = (city, tempFeel) => {
   // const { current_condition, areaName } = responseObj;
 
@@ -160,7 +132,6 @@ const renderSearchHistory = (city, tempFeel) => {
  * results
  * @returns - no returns
  */
-
 const getThreeDayForecast = (response, article) => {
   const { weather } = response;
 
@@ -182,35 +153,13 @@ const getThreeDayForecast = (response, article) => {
   article.innerHTML = '';
   article.classList.remove('hidden');
 
-  // const modalBody = document.querySelector('.modal-body');
-  const modal = document.getElementById('my-modal');
-  // const modalBtn = document.getElementById('modal-btn');
-  const closeBtn = document.querySelector('.close');
-
-  console.log('modal =', modal, closeBtn);
-  // Events
-  // modalBtn.addEventListener('click', openModal);
-  // closeBtn.addEventListener('click', closeModal);
-  // window.addEventListener('click', outsideClick);
-
-  // //Open;
-  // const openModal = () => {
-  //   modal.style.display = 'block';
-  //   console.log('HEy we are in the modal');
-  // };
-
-  // // Close
-  // const closeModal = () => {
-  //   modal.style.display = 'none';
-  // };
-
-  // // Close If Outside Click
-  // const outsideClick = (e) => {
-  //   if (e.target == modal) {
-  //     modal.style.display = 'none';
-  //   }
-  // };
-
+  // weather.forEach(({ avgtempF, maxtempF, mintempF, date }, index) => {
+  //   console.log('average =', avgtempF, maxtempF, mintempF, index);
+  //   article.innerHTML += `<div class="forecast" style="display:block;"id="${
+  //     days[index]
+  //   }"><p>${days[index]}</p><p>${
+  //     daysOfWeek[dateNum + (count % 7)]
+  //   }</p><p>${date}</p><p>Avg Temp:${avgtempF}</p><p>Max Temp:${maxtempF}</p><p>Min Temp:${mintempF}</p></div>`;
   weather.forEach(({ avgtempF, maxtempF, mintempF, date }, index) => {
     console.log('average =', avgtempF, maxtempF, mintempF, index);
     article.innerHTML += `<div class="forecast" style="display:block;"id="${
@@ -219,12 +168,49 @@ const getThreeDayForecast = (response, article) => {
       daysOfWeek[dateNum + (count % 7)]
     }</p><p>(${date})</p><p>Avg Temp:${avgtempF}</p><p>Max Temp:${maxtempF}</p><p>Min Temp:${mintempF}</p><button class="button" id="modal-btn">Hourly</button></div>`;
     count++;
+    // });
+    // count++;
+    // const btndisplay = document.createElement('button');
+    // btndisplay.setAttribute('data-modal', 'modal-hourly');
+    // btndisplay.setAttribute('type', 'button');
+    // btndisplay.setAttribute('class', 'button');
+    // btndisplay.textContent = 'hourly weather';
+    // article.append(btndisplay);
+
+    //2nd type modal button
+    // const modalBody = document.querySelector('.modal-body');
+    // const modal = document.querySelector('#my-modal');
+    // const modalBtn = document.querySelector('#modal-btn');
+    // const closeBtn = document.querySelector('.close');
+
+    // // Events
+    // modalBtn.addEventListener('click', openModal);
+    // closeBtn.addEventListener('click', closeModal);
+    // window.addEventListener('click', outsideClick);
+
+    // // Open
+    // function openModal() {
+    //   modal.style.display = 'block';
+    // }
+
+    // // Close
+    // function closeModal() {
+    //   modal.style.display = 'none';
+    // }
+
+    // // Close If Outside Click
+    // function outsideClick(e) {
+    //   if (e.target == modal) {
+    //     modal.style.display = 'none';
+    //   }
+    // }
   });
 
+  // renderhourlyWeather(response, btndisplay);
   // const threeHourBtn = document.querySelector('.three_hour');
   // threeHourBtn.addEventListener('click', (event) => {
   //   console.log(event.target, ' weather=', weather);
-  //   renderhourlyWeather(weather);
+
   // });
 };
 
@@ -242,7 +228,7 @@ const getThreeDayForecast = (response, article) => {
 const renderWeatherData = (response, city) => {
   const { current_condition, weather, nearest_area } = response;
   const { areaName, region, country } = nearest_area[0];
-  const bgImage = ['rain.gif', 'sun.gif', 'snow.gif'];
+
   const val =
     city.toLowerCase() === areaName[0].value.toLowerCase()
       ? 'Area'
@@ -255,6 +241,7 @@ const renderWeatherData = (response, city) => {
     alt = '';
   let hours = weather[0].hourly;
   let len = weather[0].hourly.length;
+  console.log(len);
 
   chanceOfSunshine =
     hours.reduce((acc, val) => {
@@ -303,22 +290,22 @@ const renderWeatherData = (response, city) => {
     src = './assets/icons8-light-snow.gif';
     alt = 'snow';
   }
-
-  weatherInfo.innerHTML += `<div class="card"><img class="icon" src=${src} alt=${alt}><br><div class="container"><h2 class="city"><strong>${city}</strong></h2><p><strong>${val}: </strong>${
+  console.log(src, alt);
+  weatherInfo.innerHTML += `<div class="card"><img class="icon" src=${src} alt=${alt} /><div class="container"><h2><strong>${city}</strong></h2><p><strong>${val}: </strong>${
     areaName[0].value
   }</p><p><strong>Region: </strong>${
     region[0].value
-  }</p><p><strong>Country: </strong>${
+  }<p><p><strong>Country: </strong>${
     country[0].value
-  }</p><p><strong>Feels Like: </strong>${
+  }<p><p><strong>Feels Like: </strong>${
     current_condition[0].FeelsLikeF
-  }<sup>&deg;</sup>F</p><p><strong>Chance of Sunshine: </strong>${chanceOfSunshine.toFixed(
+  }<sup>&deg;</sup></p><p><strong>Chance of Sunshine: </strong>${chanceOfSunshine.toFixed(
     0
   )}</p><p><strong>Chance of Rain: </strong>${chanceOfRain.toFixed(
     0
   )}</p><p><strong>Chance of Snow: </strong>${chanceOfSnow.toFixed(
     0
-  )}</p></div></div>`;
+  )}</p></div>`;
 
   const article = document.querySelector('.three_day_forecast');
   getThreeDayForecast(response, article);
@@ -404,20 +391,23 @@ window.addEventListener('DOMContentLoaded', (event) => {
   const tempForm = document.querySelector('#temperature-input');
   let location = document.querySelector('#location');
 
-  /**
-   *
-   * Dark/Light Theme Toggled
+  /***
+   * User submits the form to find the weather for their desired location
    */
+  userInput.addEventListener('submit', (event) => {
+    event.preventDefault();
 
-  const themeIcon = document.querySelector('.theme');
+    getLocation(event, location);
+  });
 
-  themeIcon.addEventListener('click', () => {
-    document.body.classList.toggle('light');
-    if (document.body.classList.contains('light')) {
-      themeIcon.src = './assets/icon-moon.svg';
-    } else {
-      themeIcon.src = './assets/icon-sun.svg';
-    }
+  /**
+   * user submits the form to convert the temperature from fahrenheit to celsius
+   * or viceversa
+   */
+  tempForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    temperatureConverter();
   });
 
   /**
@@ -426,7 +416,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
    */
 
   // const reference = localStorage.getItem('storedHistory');
-
   // if (reference) {
   //   storedHistory = JSON.parse(reference);
   //   storedHistory.forEach((obj) => {
@@ -438,23 +427,40 @@ window.addEventListener('DOMContentLoaded', (event) => {
   //   });
   // }
 
-  /***
-   *
-   * Get Location of the user
-   */
-  userInput.addEventListener('submit', (event) => {
-    event.preventDefault();
-
-    getLocation(event, location);
-  });
-
   /**
-   * Temperature Convertor Widget
    *
+   * Dark/Light Theme Toggled
    */
-  tempForm.addEventListener('submit', (event) => {
-    event.preventDefault();
 
-    temperatureConverter();
+  // const themes = document.querySelector('.theme');
+
+  // themes.addEventListener('click', () => {
+  //   document.body.classList.toggle('light');
+  //   if (document.body.classList.contains('light')) {
+  //     themes.src = './assets/moon.svg';
+  //   } else {
+  //     themes.src = './assets/sun.svg';
+  //   }
+  // });
+
+  const EL_modals = document.querySelectorAll('.modal');
+
+  const toggleModal = (ev) => {
+    console.log(ev);
+    const EL_btn = ev.currentTarget;
+    const EL_modal = document.querySelector(EL_btn.dataset.modal);
+    // Close all currently open modals:
+    EL_modals.forEach((EL) => {
+      if (EL !== EL_modal) EL.classList.remove('is-active');
+    });
+    // Toggle open/close targeted one:
+    EL_modal.classList.toggle('is-active');
+  };
+
+  const EL_modalBtns = document.querySelectorAll('[data-modal ]');
+
+  EL_modalBtns.forEach((EL) => {
+    console.log(EL);
+    EL.addEventListener('click', toggleModal);
   });
 });

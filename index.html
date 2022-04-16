@@ -14,7 +14,7 @@
    <script src="https://kit.fontawesome.com/46b13243e4.js" crossorigin="anonymous"></script>
     <title>City Weather App</title>
     <link rel="stylesheet" href="style.css">
-    <script defer src="./app.js"></script>
+   
     <!-- <script defer src="./locationinfo.js"></script>
     <script defer src="./renderingData.js"></script>
     <script defer src="./previousHistory.js"></script> -->
@@ -32,9 +32,9 @@
          </form>
 
         </div>
-         <div class="container">
-          <img class="theme" src="./assets/icon-sun.svg" alt="theme-icon" />
-        </div>
+         <!-- <div class="container">
+          <img class="theme" src="./assets/sun.svg" />
+        </div> -->
      </header>
     
      <section class="error"></section>
@@ -71,24 +71,51 @@
            </div>
           </article>
            
-           <article class="three_day_forecast hidden">
-            <div id="my-modal" class="modal">
-              This is a popup box
+           <article class="three_day_forecast hidden ">
+            <!-- <div id="my-modal" class="modal">
               <div class="modal-content">
                 <div class="modal-header">
-                  <span aria-label="Close" class="close">&times;</span>
-                  <h2>Hourly forecast</h2>
+                  <span class="close">&times;</span>
+                   <h2>POKEMAN STATS</h2>
                 </div>
                 <div class="modal-body" id="modal-body">
-          
-              
-               </div>
-          
-                 <div class="modal-footer">
-                   <h3>Modal Footer</h3>
+                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Molestias quis eius atque quo laborum est nostrum itaque rerum tenetur commodi, ipsam voluptatibus consequatur incidunt eveniet voluptate optio placeat, illo Lorem, ipsum dolor sit amet consectetur adipisicing elit. Similique quas maiores voluptate qui laboriosam voluptatum, accusamus reiciendis pariatur nemo quam amet tenetur nesciunt obcaecati laborum quo perspiciatis eaque. Commodi, vel!</p> -->
+                  <!-- <h2 class="modalTitle">
+                    <p class="modal-id"></p>
+                    <p class="modal-name"></p>
+                  </h2>
+                  <p class="modal-height"></p>
+                  <p class="modal-weight"></p>
+                  <img class="modal-front-img" src="">
+                  <img class="modal-back-img" src="">
+                  <p class="modal-type"></p>
+                  <p class="modal-basestat"></p>
+                  <p class="modal-stat"></p>
+                  <p class="modal-ability"></p> -->
+                <!-- </div>
+                <div class="modal-footer">
+                  <h3>Modal Footer</h3>
                 </div>
-                </div>
+              </div> -->
+           
+            <div id="modal-hourly" class="modal">
+              <div class="modal-content">
+                <button type="button" data-modal="#modal-hourly" class="modal-close">&times;</button>
+                <p>Dummy text Dummy text Dummy Text<br>Kind Regards</p>
+                <p>Dummy text Dummy text Dummy Text<br>Kind Regards</p>
+                <p>Dummy text Dummy text Dummy Text<br>Kind Regards</p>
+                <p>Dummy text Dummy text Dummy Text<br>Kind Regards</p>
+                <p>Dummy text Dummy text Dummy Text<br>Kind Regards</p>
+                <p>Dummy text Dummy text Dummy Text<br>Kind Regards</p>
+                <p>Dummy text Dummy text Dummy Text<br>Kind Regards</p>
+                <p>Dummy text Dummy text Dummy Text<br>Kind Regards</p>
               </div>
+            </div> 
+<!--          
+            <button type="button" data-modal="#modal-hourly">Hourly Weather</button>
+            <button type="button" data-modal="#modal-hourly">Hourly weather</button>
+            <button type="button" data-modal="#modal-hourly">Hourly Weather</button>  -->
+          
            </article>
          </main>
 
@@ -108,5 +135,6 @@
     <footer class="footer">
         <p><small>&copy; Copyright Meera Ramesh</small></p>
     </footer>
+    <script defer src="./app.js"></script>
 </body>
 </html>
