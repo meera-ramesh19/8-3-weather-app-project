@@ -4,7 +4,10 @@ let storedHistory = [];
 document.getElementById('theme-toggle').addEventListener('click', (e) => {
   const checked = e.target.checked;
   document.body.setAttribute('theme', checked ? 'dark' : 'light');
-  document.header.setAttribute('theme', checked ? 'dark' : 'light');
+
+  document
+    .querySelector('header')
+    .setAttribute('theme', checked ? 'dark' : 'light');
 });
 /***
  *
@@ -236,11 +239,12 @@ const renderWeatherData = (response, city) => {
     src = '',
     alt = '';
   let hours = weather[0].hourly;
+  let len = weather[0].hourly.length;
 
   chanceOfSunshine =
     hours.reduce((acc, val) => {
       return (acc += Number(val.chanceofsunshine));
-    }, 0) / 8;
+    }, 0) / len;
 
   let maxSunshine = hours.reduce((acc, ele) => {
     return acc > Number(ele.chanceofsunshine)
@@ -251,7 +255,7 @@ const renderWeatherData = (response, city) => {
   chanceOfSnow =
     hours.reduce((acc, val) => {
       return (acc += Number(val.chanceofsnow));
-    }, 0) / 8;
+    }, 0) / len;
 
   let maxSnow = hours.reduce((acc, ele) => {
     return acc > Number(ele.chanceofsnow)
@@ -262,7 +266,7 @@ const renderWeatherData = (response, city) => {
   chanceOfRain =
     hours.reduce((acc, val) => {
       return (acc += Number(val.chanceofrain));
-    }, 0) / 8;
+    }, 0) / len;
 
   let maxRain = hours.reduce((acc, ele) => {
     return acc > Number(ele.chanceofrain)
@@ -283,7 +287,7 @@ const renderWeatherData = (response, city) => {
     alt = 'rain';
   } else if (maxSnow > 50) {
     src = './assets/icons8-light-snow.gif';
-    alt = 'snow';
+    alt = 'snow'
   }
 
   weatherInfo.innerHTML += `<div class="card"><img class="icon" src=${src} alt=${alt}><br><div class="container"><h2 class="city"><strong>${city}</strong></h2><p><strong>Nearest Area: </strong>${val}</p><p><strong>Region: </strong>${
@@ -292,7 +296,7 @@ const renderWeatherData = (response, city) => {
     country[0].value
   }</p><p><strong>Feels Like: </strong>${
     current_condition[0].FeelsLikeF
-  }<sup>&deg;</sup></p><p><strong>Chance of Sunshine: </strong>${chanceOfSunshine.toFixed(
+  }<sup>&deg;</sup>F</p><p><strong>Chance of Sunshine: </strong>${chanceOfSunshine.toFixed(
     0
   )}</p><p><strong>Chance of Rain: </strong>${chanceOfRain.toFixed(
     0

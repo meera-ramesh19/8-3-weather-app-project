@@ -22,15 +22,33 @@ body {
   overflow: auto;
   transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 }
-/* 
+
 body[theme='light'] {
-  background: #b2dfdb;
+  background: #b0e0e6;
+  /* #e0ffff; */
+  /* #b0ede9; */
 }
 
-.header[theme='light'] {
-  background-color: #aaf0d1;
+body[theme='light'] .header {
+  background-color: #b2d7d7;
+  /* #afeeee; */
+  /* #abd9d9; */
+  /*  */
+}
+body[theme='light'] #submit-location {
+  background-color: #b2d8d8;
 }
 
+body[theme='light'] .location-data,
+body[theme='light'] .three_day_forecast {
+  background-color: #f0ead6;
+  /* #ffe4cd; */
+  color: black;
+}
+
+body[theme='light'] .button {
+  color: black;
+}
 #hybrid {
   visibility: hidden;
 }
@@ -56,7 +74,7 @@ body[theme='light'] {
 #theme-toggle:checked + label {
   background-color: transparent;
   box-shadow: inset -18px -16px 1px 1px #fff;
-} */
+}
 
 .header {
   margin: 0 auto;
