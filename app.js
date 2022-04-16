@@ -1,13 +1,23 @@
 const BASE_URL = 'https://wttr.in/';
 const searchedHistory = {};
 let storedHistory = [];
-document.getElementById('theme-toggle').addEventListener('click', (e) => {
-  const checked = e.target.checked;
-  document.body.setAttribute('theme', checked ? 'dark' : 'light');
+// document.getElementById('theme-toggle').addEventListener('click', (e) => {
+//   const checked = e.target.checked;
+//   document.body.setAttribute('theme', checked ? 'dark' : 'light');
 
-  document
-    .querySelector('header')
-    .setAttribute('theme', checked ? 'dark' : 'light');
+//   document
+//     .querySelector('header')
+//     .setAttribute('theme', checked ? 'dark' : 'light');
+// });
+const themeIcon = document.querySelector('.theme');
+
+themeIcon.addEventListener('click', () => {
+  document.body.classList.toggle('light');
+  if (document.body.classList.contains('light')) {
+    themeIcon.src = './assets/icon-moon.svg';
+  } else {
+    themeIcon.src = './assets/icon-sun.svg';
+  }
 });
 /***
  *
@@ -287,7 +297,7 @@ const renderWeatherData = (response, city) => {
     alt = 'rain';
   } else if (maxSnow > 50) {
     src = './assets/icons8-light-snow.gif';
-    alt = 'snow'
+    alt = 'snow';
   }
 
   weatherInfo.innerHTML += `<div class="card"><img class="icon" src=${src} alt=${alt}><br><div class="container"><h2 class="city"><strong>${city}</strong></h2><p><strong>Nearest Area: </strong>${val}</p><p><strong>Region: </strong>${

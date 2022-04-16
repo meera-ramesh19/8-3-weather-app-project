@@ -23,17 +23,41 @@ body {
   transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 }
 
+body.light {
+  background: #b0e0e6;
+}
+body.light .header {
+  background-color: #b2d7d7;
+  /* #afeeee; */
+  /* #abd9d9; */
+  /*  */
+}
+body.light #submit-location {
+  background-color: #b2d8d8;
+}
+
+body.light .location-data,
+body.light .three_day_forecast {
+  background-color: #f0ead6;
+  /* #ffe4cd; */
+  color: black;
+}
+
+body.light .button {
+  color: black;
+}
+/* 
 body[theme='light'] {
   background: #b0e0e6;
   /* #e0ffff; */
-  /* #b0ede9; */
+/* #b0ede9; *
 }
 
 body[theme='light'] .header {
   background-color: #b2d7d7;
   /* #afeeee; */
-  /* #abd9d9; */
-  /*  */
+/* #abd9d9; */
+/*  *
 }
 body[theme='light'] #submit-location {
   background-color: #b2d8d8;
@@ -42,14 +66,14 @@ body[theme='light'] #submit-location {
 body[theme='light'] .location-data,
 body[theme='light'] .three_day_forecast {
   background-color: #f0ead6;
-  /* #ffe4cd; */
+  /* #ffe4cd; *
   color: black;
 }
 
 body[theme='light'] .button {
   color: black;
-}
-#hybrid {
+} *
+/* #hybrid {
   visibility: hidden;
 }
 
@@ -74,7 +98,7 @@ body[theme='light'] .button {
 #theme-toggle:checked + label {
   background-color: transparent;
   box-shadow: inset -18px -16px 1px 1px #fff;
-}
+} */
 
 .header {
   margin: 0 auto;
