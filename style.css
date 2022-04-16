@@ -24,21 +24,20 @@ body {
 }
 
 body.light {
-  background: #b0e0e6;
+  background: #a8c5c7;
 }
+
 body.light .header {
-  background-color: #b2d7d7;
-  /* #afeeee; */
-  /* #abd9d9; */
-  /*  */
+  background-color: #9abdb0;
 }
+
 body.light #submit-location {
-  background-color: #b2d8d8;
+  background-color: #8fbaba;
 }
 
 body.light .location-data,
 body.light .three_day_forecast {
-  background-color: #f0ead6;
+  background-color: #949494;
   /* #ffe4cd; */
   color: black;
 }
@@ -46,59 +45,6 @@ body.light .three_day_forecast {
 body.light .button {
   color: black;
 }
-/* 
-body[theme='light'] {
-  background: #b0e0e6;
-  /* #e0ffff; */
-/* #b0ede9; *
-}
-
-body[theme='light'] .header {
-  background-color: #b2d7d7;
-  /* #afeeee; */
-/* #abd9d9; */
-/*  *
-}
-body[theme='light'] #submit-location {
-  background-color: #b2d8d8;
-}
-
-body[theme='light'] .location-data,
-body[theme='light'] .three_day_forecast {
-  background-color: #f0ead6;
-  /* #ffe4cd; *
-  color: black;
-}
-
-body[theme='light'] .button {
-  color: black;
-} *
-/* #hybrid {
-  visibility: hidden;
-}
-
-#theme-toggle {
-  visibility: hidden;
-}
-
-#theme-toggle + label {
-  content: '';
-  display: inline-block;
-  cursor: pointer;
-  height: 50px;
-  width: 50px;
-  border-radius: 50%;
-  transition: all 0.3s ease-in-out;
-}
-
-#theme-toggle:not(:checked) + label {
-  background-color: gold;
-}
-
-#theme-toggle:checked + label {
-  background-color: transparent;
-  box-shadow: inset -18px -16px 1px 1px #fff;
-} */
 
 .header {
   margin: 0 auto;

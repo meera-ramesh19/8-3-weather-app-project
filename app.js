@@ -1,41 +1,28 @@
 const BASE_URL = 'https://wttr.in/';
 const searchedHistory = {};
 let storedHistory = [];
-// document.getElementById('theme-toggle').addEventListener('click', (e) => {
-//   const checked = e.target.checked;
-//   document.body.setAttribute('theme', checked ? 'dark' : 'light');
 
-//   document
-//     .querySelector('header')
-//     .setAttribute('theme', checked ? 'dark' : 'light');
-// });
-const themeIcon = document.querySelector('.theme');
-
-themeIcon.addEventListener('click', () => {
-  document.body.classList.toggle('light');
-  if (document.body.classList.contains('light')) {
-    themeIcon.src = './assets/icon-moon.svg';
-  } else {
-    themeIcon.src = './assets/icon-sun.svg';
-  }
-});
 /***
+ * getLocation takes in location as the parameter entered by the user,
+ * calls another function to display the weather
  *
- * @params (object) event
- *
+ * @params (object) event object
+ * @params (string) location - takes in the location inputted by the user or if * no location given the api has the ability to detect the location
+ * @returns  No return.
  *
  */
+
 const getLocation = (event, location) => {
   event.preventDefault();
 
-  let weatherInfo = document.querySelector('.weather');
-  let article = document.querySelector('.three_day_forecast');
+  // let weatherInfo = document.querySelector('.weather');
+  // let article = document.querySelector('.three_day_forecast');
 
-  if (location.value === '' || location.value === null) {
-    message = 'Error !! Location cannot be empty.Please enter a Location';
-    renderError(message);
-    return;
-  }
+  // if (location.value === '' || location.value === null) {
+  //   message = 'Error !! Location cannot be empty.Please enter a Location';
+  //   renderError(message);
+  //   return;
+  // }
 
   let city = location.value;
   location.value = '';
@@ -46,12 +33,17 @@ const getLocation = (event, location) => {
 };
 
 /**
- * @params (string) url
- *
- *
- * @return (object{}) responsedata
+ * fetchLocationWeather --fetches the API data and calls the appropriate
+ * functions to render the data and to render the user's search history
+ * @params (string) url - An endpoint for the api to fetch the data
+ * @params (string) city - The location user entered or if no location entered
+ * the api returns the weather information of the local city by automatically * sensing the location
+ * @modifies the DOM is populated when the renderWeatherData and the
+ * renderSearchHistory functions are called
+ * @return No return
  *
  */
+
 const fetchLocationWeather = async (url, city) => {
   try {
     const res = await fetch(url);
@@ -62,14 +54,15 @@ const fetchLocationWeather = async (url, city) => {
     console.log('after weather', city, tempFeel);
     renderSearchHistory(city, tempFeel);
   } catch (error) {
-    // console.log('error');
     renderError(error);
   }
 };
+
 /******
- *
- *
- * @param(object) apiresponse object
+ * renderhourlyWeather - a function used to display the hourly data in a
+ * modal
+ * @param(object) apiresponse object - repsonse object from the api
+ * @returns No returns
  */
 
 const renderhourlyWeather = (repsonseObj) => {
@@ -97,12 +90,16 @@ const renderhourlyWeather = (repsonseObj) => {
   //   }
   // }
 };
+
 /**
- *
- * @param(object) apiresponse object
- * @param(string) city
- * @modifies(DOM) the side effect is populating the previous history section
- *
+ * renderSearchHistory - a function to display the location the user
+ * has searched for already. The user can look at the weather details by
+ * clicking the previous location searched. Uses localStorageAPI to preserve
+ * the data across browser sessions
+ * @param(string) city -the location user enetered
+ * @param(string) tempFeel - response string temperatureFeelsLike from the api
+ * @modifies(DOM) the function is populating the previous history section
+ * @returns - No returns
  */
 
 const renderSearchHistory = (city, tempFeel) => {
@@ -155,17 +152,18 @@ const renderSearchHistory = (city, tempFeel) => {
 };
 
 /**
- *
+ * getThreeDayForecast - displays the three day weather forecast including the
+ * the current day
  * @param(object) apiresponse object
  * @param(article) to update the DOM to display the results of the fetch
- * @modifies(DOM) the side effect is the modification of the DOM with the
+ * @modifies(DOM) DOM is populated with the three day forecast weather
  * results
+ * @returns - no returns
  */
 
 const getThreeDayForecast = (response, article) => {
   const { weather } = response;
 
-  article.innerHTML = '';
   const days = ['Today', 'Tomorrow', 'Dayafter'];
   const daysOfWeek = [
     'Sunday ',
@@ -176,17 +174,20 @@ const getThreeDayForecast = (response, article) => {
     'Friday',
     'Saturday',
   ];
-  article.classList.remove('hidden');
+
   const dateNow = new Date();
   let count = 0,
     dateNum = dateNow.getDay();
 
+  article.innerHTML = '';
+  article.classList.remove('hidden');
+
   // const modalBody = document.querySelector('.modal-body');
   const modal = document.getElementById('my-modal');
-  const modalBtn = document.getElementById('modal-btn');
+  // const modalBtn = document.getElementById('modal-btn');
   const closeBtn = document.querySelector('.close');
 
-  console.log('modal =', modal, modalBtn, closeBtn);
+  console.log('modal =', modal, closeBtn);
   // Events
   // modalBtn.addEventListener('click', openModal);
   // closeBtn.addEventListener('click', closeModal);
@@ -228,10 +229,14 @@ const getThreeDayForecast = (response, article) => {
 };
 
 /**
- *
+ * renderWeatherData - a function which calculates the chanceofSunshine,
+ * chanceofrain, chanceofsnow and displays the appropriate icon if there is a
+ * 50% or more of the chance of snow,rain or sunshine and calls
+ * threedayforecast function to display the three day forecast
  * @param(object) apiresponse object
- *  @param(string) city
+ * @param(string) city
  * @@modifies (DOM)by adding location weather and three day forecast
+ * @returns - No specific return
  */
 
 const renderWeatherData = (response, city) => {
@@ -242,7 +247,7 @@ const renderWeatherData = (response, city) => {
     city.toLowerCase() === areaName[0].value.toLowerCase()
       ? 'Area'
       : 'Nearest Area';
-  console.log(response);
+
   let chanceOfRain = 0,
     chanceOfSnow = 0,
     chanceOfSunshine = 0,
@@ -285,7 +290,6 @@ const renderWeatherData = (response, city) => {
   }, 0);
 
   const weatherInfo = document.querySelector('.location-data');
-  // const image = document.createElement('img');
 
   weatherInfo.innerHTML = '';
 
@@ -300,7 +304,9 @@ const renderWeatherData = (response, city) => {
     alt = 'snow';
   }
 
-  weatherInfo.innerHTML += `<div class="card"><img class="icon" src=${src} alt=${alt}><br><div class="container"><h2 class="city"><strong>${city}</strong></h2><p><strong>Nearest Area: </strong>${val}</p><p><strong>Region: </strong>${
+  weatherInfo.innerHTML += `<div class="card"><img class="icon" src=${src} alt=${alt}><br><div class="container"><h2 class="city"><strong>${city}</strong></h2><p><strong>${val}: </strong>${
+    areaName[0].value
+  }</p><p><strong>Region: </strong>${
     region[0].value
   }</p><p><strong>Country: </strong>${
     country[0].value
@@ -319,10 +325,14 @@ const renderWeatherData = (response, city) => {
 };
 
 /****
+ * temperatureConverter - this widget helps the user to convert the weather
+ * from celsius or fahrenheit and viceversa
  * @param(event) event object to get the value of the temperature
  * @modifies(DOM) calcuates the temperature of user's selected scale and
  * displays it in the DOM
+ * @returns - No returns
  */
+
 const temperatureConverter = (event) => {
   let temperatureInput = document.querySelector('#temp-to-convert');
   const result = document.querySelector('.result');
@@ -363,7 +373,11 @@ const temperatureConverter = (event) => {
 };
 
 /****
- *@params(string) error message
+ * renderError- function that renders an error message whenever the app
+ * encounters the error
+ * @params (string) error message
+ * @modifies (string) modifies the DOM with the appropriate error message
+ * @returns - no returns
  *
  */
 const renderError = (error) => {
@@ -377,6 +391,10 @@ const renderError = (error) => {
   errorMessage.style.display = 'block';
 };
 
+/**
+ * DOMCONTENT LOADED
+ * LOAD THE window
+ */
 window.addEventListener('DOMContentLoaded', (event) => {
   console.log('DOM fully loaded and parsed');
 
@@ -385,6 +403,27 @@ window.addEventListener('DOMContentLoaded', (event) => {
   const submitLocation = document.querySelector('#submit-location');
   const tempForm = document.querySelector('#temperature-input');
   let location = document.querySelector('#location');
+
+  /**
+   *
+   * Dark/Light Theme Toggled
+   */
+
+  const themeIcon = document.querySelector('.theme');
+
+  themeIcon.addEventListener('click', () => {
+    document.body.classList.toggle('light');
+    if (document.body.classList.contains('light')) {
+      themeIcon.src = './assets/icon-moon.svg';
+    } else {
+      themeIcon.src = './assets/icon-sun.svg';
+    }
+  });
+
+  /**
+   * Using LocalStorageAPI to preserve the session across browsers
+   *
+   */
 
   // const reference = localStorage.getItem('storedHistory');
 
@@ -399,147 +438,23 @@ window.addEventListener('DOMContentLoaded', (event) => {
   //   });
   // }
 
-  // submitLocation.addEventListener('click', getlocation);
+  /***
+   *
+   * Get Location of the user
+   */
   userInput.addEventListener('submit', (event) => {
     event.preventDefault();
 
     getLocation(event, location);
   });
+
+  /**
+   * Temperature Convertor Widget
+   *
+   */
   tempForm.addEventListener('submit', (event) => {
     event.preventDefault();
 
     temperatureConverter();
   });
 });
-
-// #efdecd-almond Color
-// #edc9af
-// gett DOM Elements
-
-//              const modalBody = document.querySelector(".modal-body");
-//              const modal = document.querySelector("#my-modal");
-//              const modalBtn = document.querySelector("#modal-btn");
-//              const closeBtn = document.querySelector(".close");
-
-//              // Events
-//              modalBtn.addEventListener("click", openModal);
-//              closeBtn.addEventListener("click", closeModal);
-//              window.addEventListener("click", outsideClick);
-
-//              // Open
-//              function openModal() {
-//                modal.style.display = "block";
-//                displayHourlyWeatherDetails(meals.recipe,meals.recipe.totalDaily, meals.recipe.totalNutrients);
-//              }
-
-//              // Close
-//              function closeModal() {
-//                modal.style.display = "none";
-//              }
-
-//              // Close If Outside Click
-//              function outsideClick(e) {
-//                if (e.target == modal) {
-//                  modal.style.display = "none";
-//                }
-//              }
-
-// const displayNutrients = (nutrientInfo,daily, nutrient) => {
-
-// document.querySelector('#modal-body').innerHTML=`
-//               <div id="hourlydata">
-//                  <table width="242" cellspacing="0" cellpadding="0">
-//                  <tbody>
-//                    <tr>
-//                      <td align="center" class="header">Nutrition Facts</td>
-//                    </tr>
-//                    <tr>
-//                      <td>
-//                        <div class="serving">Per <span class="highlighted">${(nutrientInfo.totalWeight/nutrientInfo.yield).toFixed(0)}</span> Serving Size</div>
-//                      </td>
-//                    </tr>
-//                    <tr style="height: 7px">
-//                      <td bgcolor="#000000"></td>
-//                    </tr>
-//                    <tr>
-//                      <td style="font-size: 7pt">
-//                        <div class="line">Amount Per Serving</div>
-//                      </td>
-//                    </tr>
-//                    <tr>
-//                      <td>
-//                        <div class="line">
-//                          <div class="label">Calories
-//                            <div class="weight">${(nutrientInfo.calories/nutrientInfo.yield).toFixed(0)}</div>
-//                          </div>
-//                          <div style="padding-top: 1px; float: right;" class="labellight">Calories from Fat
-//                               <span class="weights">${calFat}</span>
-//                          </div>
-//                        </div>
-//                      </td>
-//                    </tr>
-//                    <tr>
-//                      <td>
-//                        <div class="line">
-//                          <div class="dvlabel">% Daily Value<sup>*</sup></div>
-//                        </div>
-//                      </td>
-//                    </tr>
-//                    <tr>
-//                      <td>
-//                        <div class="line">
-//                          <div class="label">Total Fat <div class="weight">$  {fat}</div>
-//                          </div>
-//                          <div class="dv">${dailyFat}
-//                           </div>
-//                        </div>
-//                      </td>
-//                    </tr>
-
-//  <div id="my-modal" class="modal">
-//     <div class="modal-content">
-//       <div class="modal-header">
-//         <span class="close">&times;</span>
-//         <h2>Hourly forecast</h2>
-//       </div>
-//       <div class="modal-body" id="modal-body">
-
-//    <table>
-//          <thead>
-//              <tr>
-//                  <th>Items</th>
-//                  <th>Expenditure</th>
-//              </tr>
-//          </thead>
-//          <tbody>
-//              <tr>
-//                  <td>Stationary</td>
-//                  <td>2,000</td>
-//              </tr>
-
-//          </tbody>
-//          <tfoot>
-//              <tr>
-//                  <th>Total</th>
-//                  <td>12,000</td>
-//              </tr>
-//          </tfoot>
-//      </table>
-
-//        <div class="modal-footer">
-//        <h3>Modal Footer</h3>
-//    </div>
-
-// table {
-// //   width: 300px;
-// //   border-collapse: collapse;
-// // }
-// // table, th, td {
-// //   border: 1px solid black;
-// // }
-// // th, td {
-// //   padding: 10px;
-// //   text-align: left;
-// // }
-
-//
