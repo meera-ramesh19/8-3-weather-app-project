@@ -203,21 +203,25 @@ body {
 
 .location-data {
   grid-row: 1;
+
   background-color: #4f4f4f;
-  border-radius: 10%;
+  border-radius: 5%;
   border: 2px solid #0c7c7e;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px,
     rgba(0, 0, 0, 0.22) 0px 10px 10px;
   color: whitesmoke;
   padding: 1rem 0;
+  margin: auto 0.6rem;
 }
 
 .three_day_forecast {
   grid-row: 2;
   display: block;
+  margin: 0 auto;
+  padding: 1rem 2rem;
   color: whitesmoke;
   border: 2px solid #0c7c7e;
-  border-radius: 10%;
+  border-radius: 5%;
   background: #4f4f4f;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px,
     rgba(0, 0, 0, 0.22) 0px 10px 10px;

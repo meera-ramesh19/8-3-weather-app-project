@@ -1,7 +1,10 @@
+const BASE_URL = 'https://wttr.in/';
+const searchedHistory = {};
+let storedHistory = [];
+
 /***
  * getLocation takes in location as the parameter entered by the user,
  * calls another function to display the weather
- *
  * @params (object) event object
  * @params (string) location - takes in the location inputted by the user or if * no location given the api has the ability to detect the location
  * @returns  No return.
@@ -86,28 +89,65 @@ const fetchFromPreviousSearch = async (url, city) => {
  * @returns - No returns
  */
 const renderSearchHistory = (city, tempFeel) => {
-  console.log('cityFeel =', city, tempFeel);
+  searchedHistory[city] = tempFeel;
 
-  let ulList = document.querySelector('aside.previous-history ul');
-  let li = document.createElement('li');
-  li.innerHTML += `<a class="locationName" href="#">${city}</a>-${tempFeel}°F`;
+  const ul = document.querySelector('.search-history');
   const noSearchMessage = document.querySelector('.noSearch');
-  noSearchMessage.classList.add('hidden');
-  let delBtn = document.createElement('button');
-  delBtn.innerText = 'x';
-  delBtn.style.backgroundColor = '#0c7c7e';
-  li.append(delBtn);
 
-  delBtn.addEventListener('click', (event) => {
-    li.remove();
+  ul.querySelectorAll('*').forEach((node) => {
+    node.remove();
   });
-  ulList.append(li);
 
-  li.addEventListener('click', function (e) {
-    e.preventDefault();
-    const locationUrl = `https://wttr.in/${city}?format=j1`;
-    fetchFromPreviousSearch(locationUrl, city);
+  for (const [key, value] of Object.entries(searchedHistory)) {
+    const li = document.createElement('li');
+    li.style.padding = '0.5rem';
+    li.setAttribute('class', 'list-item');
+    li.setAttribute('data-key', `${key}`);
+
+    li.innerHTML += `<a class="locationName" href="javascript:void(0)">${key}</a>-${value}`;
+    let delBtn = document.createElement('button');
+    delBtn.innerText = 'x';
+    delBtn.style.backgroundColor = '#0c7c7e';
+    delBtn.style.marginLeft = '0.1rem';
+    li.append(delBtn);
+    noSearchMessage.classList.add('hidden');
+    ul.append(li);
+
+    delBtn.addEventListener('click', (event) => {
+      li.remove();
+    });
+  }
+
+  const searchHistoryList = document.querySelectorAll('.search-history li a');
+
+  Array.from(searchHistoryList).forEach((name) => {
+    name.addEventListener('click', function (e) {
+      e.preventDefault();
+      searchedCity = e.target.innerText;
+      const locationUrl = `https://wttr.in/${searchedCity}?format=j1`;
+      fetchLocationWeather(locationUrl, searchedCity);
+    });
   });
+  // let ulList = document.querySelector('aside.previous-history ul');
+  // let li = document.createElement('li');
+  // li.innerHTML += `<a class="locationName" href="#">${city}</a>-${tempFeel}°F`;
+  // const noSearchMessage = document.querySelector('.noSearch');
+  // noSearchMessage.classList.add('hidden');
+  // let delBtn = document.createElement('button');
+  // delBtn.innerText = 'x';
+  // delBtn.style.backgroundColor = '#0c7c7e';
+  // li.append(delBtn);
+
+  // delBtn.addEventListener('click', (event) => {
+  //   li.remove();
+  // });
+  // ulList.append(li);
+
+  // li.addEventListener('click', function (e) {
+  //   e.preventDefault();
+  //   const locationUrl = `https://wttr.in/${city}?format=j1`;
+  //   fetchFromPreviousSearch(locationUrl, city);
+  // });
 };
 
 /**
