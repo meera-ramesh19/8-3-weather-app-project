@@ -1,140 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-   <meta charset="UTF-8" />
-   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-   <link rel="icon" href="./assets/favicon.ico" />
-   <meta property="og:title" content="Weather App">
-   <meta property="og:description" content="location based 3-day weather app">
-   <meta property="og:image" content="./assets/all-feature.png">
-   <meta property="og:url" content="http://wttrapp.netlify.com">
-   <meta name="og:site_name" content="weatherapp">
-   <meta name="twitter:image:alt" content="Alt text for image">
-   <script src="https://kit.fontawesome.com/46b13243e4.js" crossorigin="anonymous"></script>
-    <title>City Weather App</title>
-    <link rel="stylesheet" href="style.css">
-   
-    <!-- <script defer src="./locationinfo.js"></script>
-    <script defer src="./renderingData.js"></script>
-    <script defer src="./previousHistory.js"></script> -->
-    <!-- <script defer src="./tempConverter.js"></script> -->
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="./assets/favicon.ico" />
+  <meta property="og:title" content="Weather App">
+  <meta property="og:description" content="location based 3-day weather app">
+  <meta property="og:image" content="./assets/all-feature.png">
+  <meta property="og:url" content="http://wttrapp.netlify.com">
+  <meta name="og:site_name" content="weatherapp">
+  <meta name="twitter:image:alt" content="Alt text for image">
+  <script src="https://kit.fontawesome.com/46b13243e4.js" crossorigin="anonymous"></script>
+  <title>City Weather App</title>
+  <link rel="stylesheet" href="style.css">
+
+  <script defer src="./app.js"></script>
 </head>
+
 <body class="backgrImage">
- 
-     <header class="header">
-      <div class="heading">
-         <h1 class="title">Weather App</h1>
-         <form id="user-inputs">
-              <p>Pick a Location </p>
-              <input type="text" aria-label="City name" placeholder="Enter a city... .." id="location"  class="location"/>
-             <input type="submit" id="submit-location" value="Get Weather" />
-         </form>
+  <header class="header">
+    <div class="heading">
+      <h1 class="title">Weather App</h1>
+      <form id="user-inputs">
+        <p>Pick a Location :</p>
+        <input type="text" aria-label="City name" placeholder="Enter a city... .." id="location" class="location" />
+        <input type="submit" id="submit-location" value="Get Weather" />
+      </form>
+    </div>
+    <div class="container">
+      <input type="checkbox" id="theme-toggle">
+      <label for="theme-toggle"></label>
+    </div>
+  </header>
 
-        </div>
-         <!-- <div class="container">
-          <img class="theme" src="./assets/sun.svg" />
-        </div> -->
-     </header>
-    
-     <section class="error"></section>
-     <section class="status">
-      <section class="main" >
+  <section class="error"></section>
 
-        <aside class="temperature-converter mob"> 
+  <section class="main">
 
-          <form id="temperature-input">
-              
-           <label id="tempText" for="temperature">Temperature</label>
-           <input type="number" aria-label="temperature value to convert " placeholder="Enter a number"
-           class="temperature" id="temp-to-convert" />
+    <aside class="temp-widget">
+      <form id="temperature-input">
+        <label id="tempText" for="temperature">Temperature:</label>
+        <input type="number" aria-label="temperature value to convert " placeholder="Enter a number" class="temperature" id="temp-to-convert" />
 
-            <section class="conversions"> 
-             <section class="celsius">
-               <label for="to-c" class="radio"> To Celsius</label>
-               <input type="radio" id="to-c" name="convert" value="celsius" checked/>
-            </section> 
-             <section class="fahrenheit"> 
-               <label for="to-f" class="radio">To Fahrenheit</label>
-               <input type="radio" id="to-f" name="convert" value="fahrenheit" />
-            </section>
-          </section>
-            <input aria-label="Convert temperature" type="submit" id="conversion-btn" value="Convert" />
-            </form>
-            <h4 class="result"></h4>
-          </aside>
-       
-        <main class="">
-          <article class="location-data" >
-            Choose a location to view the weather
-           <div class="weather" > 
-           </div>
-          </article>
-           
-           <article class="three_day_forecast hidden ">
-            <!-- <div id="my-modal" class="modal">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <span class="close">&times;</span>
-                   <h2>POKEMAN STATS</h2>
-                </div>
-                <div class="modal-body" id="modal-body">
-                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Molestias quis eius atque quo laborum est nostrum itaque rerum tenetur commodi, ipsam voluptatibus consequatur incidunt eveniet voluptate optio placeat, illo Lorem, ipsum dolor sit amet consectetur adipisicing elit. Similique quas maiores voluptate qui laboriosam voluptatum, accusamus reiciendis pariatur nemo quam amet tenetur nesciunt obcaecati laborum quo perspiciatis eaque. Commodi, vel!</p> -->
-                  <!-- <h2 class="modalTitle">
-                    <p class="modal-id"></p>
-                    <p class="modal-name"></p>
-                  </h2>
-                  <p class="modal-height"></p>
-                  <p class="modal-weight"></p>
-                  <img class="modal-front-img" src="">
-                  <img class="modal-back-img" src="">
-                  <p class="modal-type"></p>
-                  <p class="modal-basestat"></p>
-                  <p class="modal-stat"></p>
-                  <p class="modal-ability"></p> -->
-                <!-- </div>
-                <div class="modal-footer">
-                  <h3>Modal Footer</h3>
-                </div>
-              </div> -->
-           
-            <div id="modal-hourly" class="modal">
-              <div class="modal-content">
-                <button type="button" data-modal="#modal-hourly" class="modal-close">&times;</button>
-                <p>Dummy text Dummy text Dummy Text<br>Kind Regards</p>
-                <p>Dummy text Dummy text Dummy Text<br>Kind Regards</p>
-                <p>Dummy text Dummy text Dummy Text<br>Kind Regards</p>
-                <p>Dummy text Dummy text Dummy Text<br>Kind Regards</p>
-                <p>Dummy text Dummy text Dummy Text<br>Kind Regards</p>
-                <p>Dummy text Dummy text Dummy Text<br>Kind Regards</p>
-                <p>Dummy text Dummy text Dummy Text<br>Kind Regards</p>
-                <p>Dummy text Dummy text Dummy Text<br>Kind Regards</p>
-              </div>
-            </div> 
-<!--          
-            <button type="button" data-modal="#modal-hourly">Hourly Weather</button>
-            <button type="button" data-modal="#modal-hourly">Hourly weather</button>
-            <button type="button" data-modal="#modal-hourly">Hourly Weather</button>  -->
-          
-           </article>
-         </main>
+        <section class="celsius">
+          <label for="to-c" class="radio"> To Celsius</label>
+          <input type="radio" id="to-c" name="convert" value="celsius" checked />
+        </section>
 
-        <aside class="previous-history">
-           <section class="history">Previous Searches
-            <p class="noSearch">No previous searches</p>
-            <nav>
-            <ul class="search-history">
-               
-            </ul>
-          </nav>
-           </section>
-         </aside>
-      
+        <section class="fahrenheit">
+          <label for="to-f" class="radio">To Fahrenheit</label>
+          <input type="radio" id="to-f" name="convert" value="fahrenheit" />
+        </section>
+        
+        <input aria-label="Convert temperature" type="submit" id="conversion-btn" value="Convert" />
+      </form>
+
+      <form id="mob-temp">
+        <label for="temperature" class="tempLabel">Temperature:</label>
+        <select name="temp" id="temp">
+          <option value="none" selected>Select a temp</option>
+          <option value="celsius">Celsius</option>
+          <option value="fahrenheit">Fahrenheit</option>
+        </select>
+
+        <input type="submit" class="submit" value="Submit">
+      </form>
+      <h4 class="result"></h4>
+    </aside>
+
+    <main>
+      <div class="main-articles">
+        <article class="location-data">
+          Choose a location to view the weather
+          <div class="weather">
+          </div>
+        </article>
+
+        <article class="three_day_forecast hidden">
+
+        </article>
+      </div>
+    </main>
+
+    <aside class="previous-history">
+      <section class="history">Previous Searches
+        <p class="noSearch">No previous searches</p>
+        <ul class="search-history"> </ul>
       </section>
-    </section>
-    <footer class="footer">
-        <p><small>&copy; Copyright Meera Ramesh</small></p>
-    </footer>
-    <script defer src="./app.js"></script>
+    </aside>
+  </section>
+
+  <footer class="footer">
+    <p><small>&copy; Copyright Meera Ramesh</small></p>
+  </footer>
+
 </body>
+
 </html>
