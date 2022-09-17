@@ -1,5 +1,22 @@
 # Weather App Project
 
+
+
+
+---
+[https://user-images.githubusercontent.com/46873861/190873340-fcd75b5b-4201-43c4-95b7-3e3d38963d56.mp4](https://user-images.githubusercontent.com/46873861/190873340-fcd75b5b-4201-43c4-95b7-3e3d38963d56.mp4)
+
+---
+<img width="1440" alt="Weatherapphome" src="https://user-images.githubusercontent.com/46873861/190873389-a6a7cb55-a1ba-4f47-a473-48565f47057d.png">
+---
+<img width="1439" alt="Weatherappwidget" src="https://user-images.githubusercontent.com/46873861/190873402-1df06784-4c9a-4555-a418-ef8371f7e999.png">
+---
+<img width="1438" alt="weatherapp2" src="https://user-images.githubusercontent.com/46873861/190873409-8ff3832d-3a31-411b-9c7b-7b845a9ebc60.png">
+---
+<img width="1438" alt="Weatherapp" src="https://user-images.githubusercontent.com/46873861/190873413-b6f9aa45-8c00-4947-9806-c0db0c093850.png">
+
+---
+
 For this assignment, you will build a weather application that will make use of the [wttr.in API](https://github.com/chubin/wttr.in) to show the weather in different locations. Your application will also store previous searches.
 
 There are 7 features that need to be created. Each completed feature (passes all the tests) will be worth 1 point.
