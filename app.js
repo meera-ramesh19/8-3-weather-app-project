@@ -2,8 +2,19 @@ const BASE_URL = 'https://wttr.in/';
 const searchedHistory = {};
 let storedHistory = [];
 
+const themeIcon = document.querySelector('.theme');
+
+themeIcon.addEventListener('click', () => {
+  document.body.classList.toggle('light');
+  if (document.body.classList.contains('light')) {
+    themeIcon.src = './assets/moon.svg';
+  } else {
+    themeIcon.src = './assets/sun.svg';
+  }
+});
+
 /***
- * getLocation takes in location as the parameter entered by the user,
+ * getLocation takes in location is the parameter entered by the user,
  * calls another function to display the weather
  * @params (object) event object
  * @params (string) location - takes in the location inputted by the user or if * no location given the api has the ability to detect the location
@@ -49,35 +60,12 @@ const fetchLocationWeather = async (url, city) => {
     renderWeatherData(data, city);
     const { current_condition } = data;
     const tempFeel = current_condition[0].FeelsLikeF;
-    console.log('after weather', city, tempFeel);
     renderSearchHistory(city, tempFeel);
   } catch (error) {
     renderError(error);
   }
 };
 
-/**
- * fetchFromPreviousSearch --fetches the API data and calls the appropriate
- * functions to render the data and to render the user's search history
- * @params (string) url - An endpoint for the api to fetch the data
- * @params (string) city - The location user entered or if no location entered
- * the api returns the weather information of the local city by automatically * sensing the location
- * @modifies the DOM is populated when the renderWeatherData and the
- * @returns No return
- *
- */
-const fetchFromPreviousSearch = async (url, city) => {
-  try {
-    const res = await fetch(url);
-    const data = await res.json();
-    renderWeatherData(data, city);
-    const { current_condition } = data;
-    const tempFeel = current_condition[0].FeelsLikeF;
-    console.log('after weather', city, tempFeel);
-  } catch (error) {
-    renderError(error);
-  }
-};
 /**
  * renderSearchHistory - a function to display the location the user
  * has searched for already. The user can look at the weather details by
@@ -90,6 +78,9 @@ const fetchFromPreviousSearch = async (url, city) => {
  */
 const renderSearchHistory = (city, tempFeel) => {
   searchedHistory[city] = tempFeel;
+
+  window.localStorage.setItem('storedHistory', JSON.stringify(searchedHistory));
+  console.log(localStorage);
 
   const ul = document.querySelector('.search-history');
   const noSearchMessage = document.querySelector('.noSearch');
@@ -128,26 +119,23 @@ const renderSearchHistory = (city, tempFeel) => {
       fetchLocationWeather(locationUrl, searchedCity);
     });
   });
-  // let ulList = document.querySelector('aside.previous-history ul');
-  // let li = document.createElement('li');
-  // li.innerHTML += `<a class="locationName" href="#">${city}</a>-${tempFeel}°F`;
-  // const noSearchMessage = document.querySelector('.noSearch');
-  // noSearchMessage.classList.add('hidden');
-  // let delBtn = document.createElement('button');
-  // delBtn.innerText = 'x';
-  // delBtn.style.backgroundColor = '#0c7c7e';
-  // li.append(delBtn);
 
-  // delBtn.addEventListener('click', (event) => {
-  //   li.remove();
-  // });
-  // ulList.append(li);
-
-  // li.addEventListener('click', function (e) {
-  //   e.preventDefault();
-  //   const locationUrl = `https://wttr.in/${city}?format=j1`;
-  //   fetchFromPreviousSearch(locationUrl, city);
-  // });
+  const clearBtn = document.querySelector('.removeLocal');
+  console.log(clearBtn);
+  clearBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    window.localStorage.clear();
+    
+  });
+  // function removeLocalStorageValues(target) {
+  //   let i = localStorage.length;
+  //   while (i-- > 0) {
+  //       let key = localStorage.key(i);
+  //       if (localStorage.getItem(key) === target) {
+  //           localStorage.removeItem(key);
+  //       }
+  //   }
+  //   }
 };
 
 /**
@@ -181,12 +169,23 @@ const getThreeDayForecast = (response, article) => {
   article.classList.remove('hidden');
 
   weather.forEach(({ avgtempF, maxtempF, mintempF, date }, index) => {
-    console.log('average =', avgtempF, maxtempF, mintempF, index);
+    console.log(
+      'average =',
+      avgtempF,
+      maxtempF,
+      mintempF,
+      index,
+      count,
+      dateNum,
+      daysOfWeek[dateNum],
+      count % 7
+    );
+
     article.innerHTML += `<div class="forecast" style="display:block; border:2px solid #0c7c7e;"id="${
       days[index]
     }"><p>${days[index]}<p>${
-      daysOfWeek[dateNum + (count % 7)]
-    }</p><p>(${date})</p><p>Avg Temp:${avgtempF}</p><p>Max Temp:${maxtempF}</p><p>Min Temp:${mintempF}</p><br></div>`;
+      daysOfWeek[(dateNum + count) % 7]
+    }</p><p>(${date})</p><p>Avg Temp:${avgtempF}</p><p>Max Temp:${maxtempF}</p><p>Min Temp:${mintempF}</p><br>`;
     count++;
   });
 };
@@ -267,7 +266,7 @@ const renderWeatherData = (response, city) => {
     src = './assets/icons8-light-snow.gif';
     alt = 'snow';
   }
-  console.log(src, alt);
+
   weatherInfo.innerHTML += `<div class="card" "><img class="icon" src=${src} alt=${alt} /><div class="container" style="display:block;"><h2><strong>${city}</strong></h2><p><strong>${val}: </strong>${
     areaName[0].value
   }</p><p><strong>Region: </strong>${
@@ -391,12 +390,31 @@ window.addEventListener('DOMContentLoaded', (event) => {
   /***
    * Dark/light theme toggle
    */
-  document.getElementById('theme-toggle').addEventListener('click', (e) => {
-    const checked = e.target.checked;
-    document.body.setAttribute('theme', checked ? 'dark' : 'light');
+  // document.getElementById('theme-toggle').addEventListener('click', (e) => {
+  //   const checked = e.target.checked;
+  //   document.body.setAttribute('theme', checked ? 'dark' : 'light');
 
-    document
-      .querySelector('header')
-      .setAttribute('theme', checked ? 'dark' : 'light');
-  });
+  //   document
+  //     .querySelector('header')
+  //     .setAttribute('theme', checked ? 'dark' : 'light');
+  // });
+
+  /**
+   * Using LocalStorageAPI to preserve the session across browsers
+   *
+   */
+
+  const reference = localStorage.getItem('storedHistory');
+  console.log();
+  if (reference) {
+    storedHistory = JSON.parse(reference);
+    console.log('stored=', storedHistory);
+    // storedHistory.forEach((obj) => {
+    //   console.log(obj);
+    Object.entries(storedHistory).forEach(([key, value]) => {
+      console.log(key, value);
+      renderSearchHistory(key, value);
+    });
+    // });
+  }
 });

@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" href="./assets/favicon.ico" />
+  <link rel="icon" href="./acdssets/favicon.ico" />
   <meta property="og:title" content="Weather App">
   <meta property="og:description" content="location based 3-day weather app">
   <meta property="og:image" content="./assets/all-feature.png">
@@ -30,8 +30,9 @@
       </form>
     </div>
     <div class="container">
-      <input type="checkbox" id="theme-toggle">
-      <label for="theme-toggle"></label>
+      <img class="theme" src="./assets/sun.svg" alt="theme-icon" />
+      <!-- <input type="checkbox" id="theme-toggle">
+      <label for="theme-toggle"></label> -->
     </div>
   </header>
 
@@ -69,7 +70,7 @@
         </article>
 
         <article class="three_day_forecast hidden">
-
+     
         </article>
       </div>
     </main>
@@ -78,6 +79,7 @@
       <section class="history">Previous Searches
         <p class="noSearch">No previous searches</p>
         <ul class="search-history"> </ul>
+        <button class="removeLocal">ClearAll</button>
       </section>
     </aside>
   </section>
