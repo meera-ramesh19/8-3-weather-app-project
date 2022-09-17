@@ -11,11 +11,6 @@
 ---
 <img width="1439" alt="Weatherappwidget" src="https://user-images.githubusercontent.com/46873861/190873402-1df06784-4c9a-4555-a418-ef8371f7e999.png">
 ---
-<img width="1438" alt="weatherapp2" src="https://user-images.githubusercontent.com/46873861/190873409-8ff3832d-3a31-411b-9c7b-7b845a9ebc60.png">
----
-<img width="1438" alt="Weatherapp" src="https://user-images.githubusercontent.com/46873861/190873413-b6f9aa45-8c00-4947-9806-c0db0c093850.png">
-
----
 
 For this assignment, you will build a weather application that will make use of the [wttr.in API](https://github.com/chubin/wttr.in) to show the weather in different locations. Your application will also store previous searches.
 
